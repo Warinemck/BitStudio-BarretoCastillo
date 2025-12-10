@@ -114,7 +114,7 @@
         }
         
         .accordion-content.active {
-            max-height: 2000px; /* Aumentado para soportar acordeones anidados */
+            max-height: 2000px;
             opacity: 1;
             margin-top: 1rem;
             padding-top: 1rem;
@@ -144,6 +144,21 @@
             font-weight: bold;
         }
 
+        /* Estilo para el Overlay de Pagos */
+        #pagos-overlay {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #pagos-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #pagos-overlay.visible-overlay {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -159,11 +174,9 @@
             <div class="flex items-center justify-between h-20">
                 
                 <!-- Logo BitStudio -->
-                <div class="flex items-center gap-3 logo-container group cursor-pointer">
+                <div class="flex items-center gap-3 logo-container group cursor-pointer" onclick="window.location.href='#inicio'">
                     <div class="relative p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 group-hover:border-cyan-400/50 transition-colors">
-                        <!-- Icono CPU para representar "Bit" -->
                         <i data-lucide="cpu" class="text-cyan-400 w-6 h-6 logo-icon transition-all duration-300"></i>
-                        <!-- Pequeño punto de estado -->
                         <div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#0f172a]"></div>
                     </div>
                     <div class="flex flex-col">
@@ -174,9 +187,15 @@
                 
                 <!-- Links Desktop -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
+                    <div class="ml-10 flex items-center space-x-8">
                         <a href="#inicio" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Inicio</a>
                         <a href="#servicios" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Servicios</a>
+                        
+                        <!-- Botón Pagos Desktop -->
+                        <button onclick="togglePagos()" class="text-sm font-medium text-blue-300 hover:text-blue-400 transition-colors flex items-center gap-2">
+                            <i class="fa-brands fa-paypal"></i> Pagos
+                        </button>
+
                         <a href="#contacto" class="px-5 py-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all text-sm font-bold">
                             Contáctame
                         </a>
@@ -196,10 +215,86 @@
             <div class="px-4 py-4 space-y-2">
                 <a href="#inicio" class="block px-3 py-2 rounded-md hover:bg-white/5 text-gray-200">Inicio</a>
                 <a href="#servicios" class="block px-3 py-2 rounded-md hover:bg-white/5 text-gray-200">Servicios</a>
+                <!-- Botón Pagos Movil -->
+                <button onclick="togglePagos(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left block px-3 py-2 rounded-md hover:bg-white/5 text-blue-300">
+                    <i class="fa-brands fa-paypal mr-2"></i> Pagos
+                </button>
                 <a href="#contacto" class="block px-3 py-2 rounded-md text-cyan-400 font-bold hover:bg-white/5">Contacto</a>
             </div>
         </div>
     </nav>
+
+    <!-- Overlay de Pagos (Sección Oculta) -->
+    <div id="pagos-overlay" class="hidden-overlay fixed inset-0 z-[60] bg-[#0f172a]/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded-3xl max-w-md w-full relative border border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
+            <!-- Botón Cerrar -->
+            <button onclick="togglePagos()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center">
+                <div class="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-400 border border-blue-500/30">
+                    <i class="fa-brands fa-paypal text-4xl"></i>
+                </div>
+                
+                <h2 class="text-3xl font-bold text-white mb-2">Métodos de Pago</h2>
+                <p class="text-gray-400 mb-8 text-sm">Realiza tu pago de forma segura a través de PayPal.</p>
+
+                <div class="space-y-6">
+                    <!-- Opción 1: PayPal.Me Link (ACTIVADO) -->
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <p class="text-xs text-blue-300 font-bold uppercase mb-2 tracking-wider">Pago Rápido</p>
+                        <p class="text-sm text-gray-300 mb-3">Haz clic en el botón para pagar directamente con tu cuenta:</p>
+                        <!-- Link actualizado con tu usuario -->
+                        <a href="https://paypal.me/BitStudio1240" target="_blank" class="block w-full py-3 bg-[#0070BA] hover:bg-[#005ea6] text-white font-bold rounded-lg transition-colors shadow-lg">
+                            Pagar con PayPal.Me
+                        </a>
+                    </div> 
+
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-white/10"></div>
+                        <span class="flex-shrink-0 mx-4 text-gray-500 text-xs">O USA EL CORREO</span>
+                        <div class="flex-grow border-t border-white/10"></div>
+                    </div>
+
+                    <!-- Opción 2: Correo -->
+                    <div class="bg-blue-600/10 rounded-xl p-6 border border-blue-500/30 relative overflow-hidden">
+                        <!-- Etiqueta de Recomendado -->
+                        <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] px-2 py-1 font-bold rounded-bl-lg">
+                            RECOMENDADO
+                        </div>
+
+                        <div class="text-left mb-4">
+                            <p class="text-xs text-blue-300 font-bold uppercase mb-2 tracking-wider">Instrucciones:</p>
+                            <ol class="text-xs text-gray-300 space-y-1 list-decimal ml-4 mb-4">
+                                <li>Entra a tu app de PayPal.</li>
+                                <li>Selecciona "Enviar" o "Pagar".</li>
+                                <li>Ingresa el siguiente correo:</li>
+                            </ol>
+                            
+                            <!-- Contenedor del Correo -->
+                            <div class="bg-black/30 p-3 rounded-lg border border-white/10 flex items-center justify-between group cursor-pointer" onclick="copiarCorreo()">
+                                <p class="text-white font-mono text-sm break-all" id="paypal-email">jesusantoniobarretocastillo02@gmail.com</p>
+                                <i data-lucide="copy" class="w-5 h-5 text-blue-400 group-hover:text-white transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <button onclick="copiarCorreo()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-copy"></i> Copiar Correo
+                        </button>
+                    </div>
+                </div>
+
+                <p class="mt-8 text-xs text-gray-500 italic">
+                    * Una vez realizado el pago, por favor envía una captura de pantalla por WhatsApp para confirmar tu pedido.
+                </p>
+
+                <button onclick="togglePagos()" class="mt-6 text-gray-400 hover:text-white text-sm underline underline-offset-4">
+                    Volver a la página principal
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Sección Hero (Inicio) -->
     <section id="inicio" class="relative pt-40 pb-20 px-4 text-center">
@@ -755,21 +850,32 @@
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
             
-            // Si el icono es un SVG inyectado por Lucide, necesitamos manejarlo con cuidado
-            // pero si es FontAwesome o elemento I directo funcionará con style.transform
-            
-            // Detener propagación si es un sub-botón para que no cierre el padre (si fuera necesario)
-            // event.stopPropagation(); 
-
             if (content.classList.contains('active')) {
                 content.classList.remove('active');
                 icon.style.transform = 'rotate(0deg)';
-                // Si es un sub-acordeón cerrándose, podríamos ajustar la altura del padre si quisiéramos,
-                // pero con max-height grande en CSS no es necesario.
             } else {
                 content.classList.add('active');
                 icon.style.transform = 'rotate(180deg)';
             }
+        }
+
+        // --- Lógica Nueva para la Sección de Pagos ---
+        function togglePagos() {
+            const overlay = document.getElementById('pagos-overlay');
+            if (overlay.classList.contains('hidden-overlay')) {
+                overlay.classList.remove('hidden-overlay');
+                overlay.classList.add('visible-overlay');
+            } else {
+                overlay.classList.remove('visible-overlay');
+                overlay.classList.add('hidden-overlay');
+            }
+        }
+
+        function copiarCorreo() {
+            const correo = document.getElementById('paypal-email').innerText;
+            navigator.clipboard.writeText(correo).then(() => {
+                alert('Correo copiado al portapapeles');
+            });
         }
     </script>
 </body>
