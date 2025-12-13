@@ -269,13 +269,13 @@
     <div id="music-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2">
         
         <!-- Botón Disparador ("Bolita") -->
-        <button id="music-trigger" class="glass-panel px-4 py-1.5 rounded-full flex items-center gap-2 border border-white/10 shadow-lg backdrop-blur-xl bg-[#0f172a]/60 text-xs font-bold text-gray-300 hover:text-white transition-all hover:scale-105 group">
+        <button id="music-trigger" class="glass-panel px-4 py-1.5 rounded-full flex items-center gap-2 border border-white/10 shadow-lg backdrop-blur-xl bg-[#0f172a]/60 text-xs font-bold text-gray-300 hover:text-white transition-all hover:scale-105 z-50 group">
             <span>Música</span>
             <i class="fa-solid fa-chevron-down transition-transform duration-300 group-hover:text-cyan-400 text-[10px]"></i>
         </button>
 
-        <!-- Panel de Control (Oculto por defecto) -->
-        <div id="music-panel" class="hidden glass-panel px-4 py-2 rounded-full flex items-center gap-3 border border-white/10 shadow-[0_0_20px_rgba(34,211,238,0.15)] backdrop-blur-xl bg-[#0f172a]/80 transition-all duration-300 origin-top animate-fade-in-down">
+        <!-- Panel de Control (Oculto por defecto con clases para animación de salida) -->
+        <div id="music-panel" class="hidden glass-panel px-4 py-2 rounded-full flex items-center gap-3 border border-white/10 shadow-[0_0_20px_rgba(34,211,238,0.15)] backdrop-blur-xl bg-[#0f172a]/80 transition-all duration-500 ease-in-out -translate-y-8 opacity-0 z-40">
             <button id="music-toggle" class="text-cyan-400 hover:text-white transition-transform hover:scale-110 w-6 flex justify-center shrink-0">
                 <i class="fa-solid fa-play text-lg"></i>
             </button>
@@ -1632,23 +1632,28 @@
             // Toggle para mostrar/ocultar el panel de música
             musicTrigger.addEventListener('click', () => {
                 if (musicPanel.classList.contains('hidden')) {
-                    // Mostrar
+                    // MOSTRAR:
+                    // 1. Quitar hidden y poner flex
                     musicPanel.classList.remove('hidden');
-                    musicPanel.classList.add('flex'); // Usar flex para mantener layout
-                    // Animación simple con timeout para permitir transición CSS si se desea más complejo, 
-                    // pero aquí usamos clases de utilidad directa
+                    musicPanel.classList.add('flex'); 
+                    
+                    // 2. Pequeño delay para que el navegador procese el cambio de display antes de la transición
                     setTimeout(() => {
-                        musicPanel.classList.remove('scale-y-0', 'opacity-0');
-                    }, 10); 
+                        musicPanel.classList.remove('-translate-y-8', 'opacity-0');
+                    }, 10);
+                    
                     triggerIcon.classList.add('rotate-180');
                 } else {
-                    // Ocultar
-                    musicPanel.classList.add('scale-y-0', 'opacity-0');
+                    // OCULTAR:
+                    // 1. Aplicar estado de salida (subir y desvanecer)
+                    musicPanel.classList.add('-translate-y-8', 'opacity-0');
                     triggerIcon.classList.remove('rotate-180');
+                    
+                    // 2. Esperar a que termine la animación (500ms) para ocultar del DOM
                     setTimeout(() => {
                         musicPanel.classList.add('hidden');
                         musicPanel.classList.remove('flex');
-                    }, 300); // Esperar transición
+                    }, 500); 
                 }
             });
 
