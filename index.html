@@ -1,736 +1,1581 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo - Invitacion</title>
-    <!-- Fuentes de Google: Agregada 'Pinyon Script' para el nombre -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title>BitStudio | Soluciones Tecnológicas</title>
+    <!-- Agregado: Icono de la página (Favicon) -->
+    <link rel="icon" type="image/x-icon" href="icon.ico">
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        :root {
-            --bg-cream: #FAF3E0;
-            --copper-dark: #8B4513;      
-            --copper-mid: #B87333;        
-            --copper-orange: #D2691E;   
-            --copper-gold: #DAA520;
-            --white: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- Configuración Base y Tipografía --- */
         body {
-            background-color: var(--bg-cream);
-            font-family: 'Lato', sans-serif;
-            color: var(--copper-dark);
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- CLASES DECORATIVAS --- */
-        .blend-img {
-            mix-blend-mode: multiply; 
-            display: block;
-            max-width: 100%;
-            height: auto;
+        /* --- Scrollbar Personalizado --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) rgba(15, 23, 42, 0.1);
         }
 
-        .flower-top {
-            width: 80%;
-            margin: -20px auto 10px auto; 
-            position: relative;
-            z-index: 10;
-            /* MODIFICADO: Rotación de 180 grados para que la flor de abajo se vea bien arriba */
-            transform: rotate(180deg); 
+        /* Ajuste para el scroll */
+        html {
+            scroll-padding-top: 100px;
         }
 
-        .flower-bottom {
-            width: 90%;
-            margin: 20px auto 0 auto;
-            opacity: 0.9;
-        }
-
-        .side-decoration-container {
-            position: relative;
-            width: 100%;
-            height: 0; 
-            overflow: visible;
-            z-index: 0;
-        }
-
-        .flower-side {
-            position: absolute;
-            width: 80px; 
-            opacity: 0.7;
-            top: -100px; 
-        }
-
-        .side-left {
-            left: -10px;
-            transform: scaleX(-1); 
-        }
-
-        .side-right {
-            right: -10px;
-        }
-
-        /* --- PARALLAX (Flores flotantes - Desktop) --- */
-        .parallax-wrapper {
+        /* --- Fondo Animado (Orbes de Luz) --- */
+        .background-orb {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; 
-            z-index: 20; 
-            overflow: hidden;
-        }
-
-        .parallax-flower {
-            position: absolute;
-            filter: sepia(0.8) saturate(1.5) hue-rotate(10deg) brightness(0.9) blur(1px);
-            opacity: 0.9; 
-            transition: transform 0.1s linear; 
-            height: auto;
-        }
-
-        /* Posiciones Parallax (Centro en Esquina - Desktop) */
-        .p-flower-1 { top: -17.5vw; left: -17.5vw; width: 35vw; transform: rotate(45deg); }
-        .p-flower-2 { top: -22.5vw; right: -22.5vw; width: 45vw; transform: rotate(-15deg); }
-        .p-flower-3 { bottom: -20vw; left: -20vw; width: 40vw; transform: rotate(20deg); }
-        .p-flower-4 { top: 50%; right: -17.5vw; width: 35vw; margin-top: -17.5vw; transform: rotate(-90deg); }
-        .p-flower-5 { top: 15vw; left: -9vw; width: 25vw; transform: rotate(10deg); }
-        .p-flower-6 { top: auto; bottom: -21vw; right: -21vw; width: 42vw; transform: rotate(-20deg); }
-
-        /* --- FLORES ESTÁTICAS (Móvil) --- */
-        /* Por defecto ocultas en escritorio */
-        .static-flower {
-            display: none;
-        }
-
-        /* --- FONDO ANIMADO --- */
-        #background-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; 
-            overflow: hidden;
-            opacity: 0.2; 
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            animation: float 25s infinite ease-in-out;
+            opacity: 0.5;
             pointer-events: none;
         }
 
-        #scrolling-bg {
-            width: 100%;
-            animation: scrollUp 40s linear infinite; 
+        .orb-primary {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
+            top: -150px;
+            left: -150px;
         }
 
-        @keyframes scrollUp {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
+        .orb-secondary {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #c026d3 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
         }
 
-        .bg-svg-layer {
-            display: block;
-            width: 100%;
-            height: auto; 
+        .orb-accent {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+            opacity: 0.3;
         }
 
-        @keyframes rotateFlower {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.5); 
-            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(250, 243, 224, 0.9)); 
-            box-shadow: 0 0 40px rgba(139, 69, 19, 0.15);
-            min-height: 100vh;
-            text-align: center;
-            padding-bottom: 50px;
-            padding-top: 20px; 
-            border-left: 1px solid rgba(184, 115, 51, 0.2);
-            border-right: 1px solid rgba(184, 115, 51, 0.2);
+        /* --- Glassmorphism --- */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            z-index: 1; 
+            overflow: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--copper-mid);
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
         }
 
-        .header {
-            padding-top: 10px;
-            padding-bottom: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .celebrate-text {
-            font-family: 'Great Vibes', cursive; 
-            font-size: 5rem; 
-            color: var(--copper-dark); 
-            margin-bottom: -10px;
-            margin-top: 20px;
-            line-height: 1.1;
-        }
-
-        /* --- MODIFICACIÓN DEL TÍTULO 70 Y NOMBRE (STACK VERTICAL) --- */
-        .title-design-container {
-            position: relative;
-            /* RESTAURADO: Altura fija para soportar posicionamiento absoluto */
-            height: 450px; 
-            display: flex;
-            /* RESTAURADO: Sin flex-direction column para que el absolute funcione sobre el centro */
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            z-index: 5; 
-            overflow: visible; 
-        }
-
-        .big-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 30rem; 
-            line-height: 0.8; 
-            color: var(--copper-mid); 
-            background: linear-gradient(45deg, #8B4513, #B87333, #D4AF37, #B87333);
+        /* --- Utilidades de Texto --- */
+        .text-gradient {
+            background: linear-gradient(to right, #22d3ee, #e879f9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-style: italic;
-            position: relative;
-            z-index: 1;
-            letter-spacing: -25px; 
-            /* RESTAURADO: Margen normal */
-            margin-top: 0;
         }
 
-        /* Estilo para "Angeles" SOBREPUESTO AL NUMERO */
-        .name-overlay {
-            /* RESTAURADO: Posición absoluta centrada */
-            position: absolute;
-            top: 50%; 
-            left: 50%;
-            /* Centrado absoluto + leve inclinación */
-            transform: translate(-50%, -50%) rotate(-5deg); 
-            
-            font-family: 'Pinyon Script', cursive; 
-            font-size: 8rem; 
-            color: var(--copper-dark);
-            
-            text-shadow: 
-                4px 4px 0px rgba(255, 255, 255, 0.95),
-                -3px -3px 0 rgba(255, 255, 255, 0.95),  
-                3px -3px 0 rgba(255, 255, 255, 0.95),
-                -3px 3px 0 rgba(255, 255, 255, 0.95),
-                0px 0px 15px rgba(255, 255, 255, 1);
-            
-            white-space: nowrap;
-            z-index: 10;
-            width: auto;
-            margin-bottom: 0;
-        }
-
-        .years-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem; 
-            color: var(--copper-mid);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-top: 10px; 
-            margin-bottom: 30px;
-        }
-
-        .date-section {
-            margin: 30px 20px;
-            border-top: 1px solid var(--copper-mid);
-            border-bottom: 1px solid var(--copper-mid);
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .date-number {
-            font-size: 3.5rem;
-            line-height: 1;
-            font-family: 'Playfair Display', serif;
-            color: var(--copper-mid);
-        }
-
-        .date-month {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--copper-mid);
-        }
-
-        .divider {
-            color: var(--copper-mid);
-            font-size: 2rem;
-            font-weight: 300;
-        }
-
-        .intro-text-container {
-            position: relative;
-            padding: 20px 30px;
-        }
-
-        .intro-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
-            font-style: italic;
-            position: relative;
-            z-index: 2; 
-        }
-
-        .details-grid {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            padding: 0 20px;
-        }
-        
-        .detail-item h3 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
-        
-        .icon-svg {
-            width: 30px;
-            height: 30px;
-            fill: var(--copper-mid);
-            margin-bottom: 10px;
-        }
-        
-        .map-container {
-            width: 100%;
-            height: 200px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            border-radius: 15px; 
+        /* --- Acordeón (Dropdown) --- */
+        .accordion-content {
+            max-height: 0;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(184, 115, 51, 0.2);
-            border: 1px solid rgba(184, 115, 51, 0.3);
+            transition: max-height 0.5s ease-out, opacity 0.5s ease, margin-top 0.3s ease;
+            opacity: 0;
         }
         
-        .map-iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
+        .accordion-content.active {
+            max-height: 2000px;
+            opacity: 1;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .gift-section {
-            margin: 50px 20px;
-            padding: 20px 15px 30px 15px;
-            background-color: rgba(184, 115, 51, 0.05);
-            border-radius: 10px;
+        .chevron {
+            transition: transform 0.3s ease;
         }
-        
-        .animation-container {
+        /* --- Logo Animado --- */
+        .logo-container:hover .logo-icon {
+            color: #22d3ee;
+            filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5));
+        }
+
+        /* Estilo para listas dentro de detalles */
+        .details-list li {
             position: relative;
-            height: 150px; 
-            width: 100%;
-            margin: 0 auto 20px auto;
-            overflow: hidden; 
-            border-bottom: 2px solid var(--copper-mid);
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-
-        .envelope {
+        .details-list li::before {
+            content: '•';
+            color: #22d3ee;
             position: absolute;
-            width: 50px; 
-            height: 35px;
-            background: #fff;
-            border: 1px solid #e0e0e0; 
-            z-index: 1;
-            top: -40px; 
-            animation: rainDown linear infinite; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-            border-radius: 2px;
-        }
-        
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 18px 25px 0 25px; 
-            border-color: #f0f0f0 transparent transparent transparent; 
-            z-index: 2;
-            transform-origin: top;
+            left: 0;
+            font-weight: bold;
         }
 
-        .envelope::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 25px 15px 25px; 
-            border-color: transparent transparent #fafafa transparent;
-            border-bottom-color: #f5f5f5;
-            z-index: 1;
+        /* Estilo para el Overlay de Pagos */
+        #pagos-overlay {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #pagos-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #pagos-overlay.visible-overlay {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
-        .seal {
-            position: absolute;
-            width: 8px; height: 8px;
-            background: var(--copper-mid);
-            border-radius: 50%;
-            top: 14px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            border: 1px solid var(--copper-dark);
+        /* --- Estilo para el Overlay de DEMO (NUEVO/ACTUALIZADO) --- */
+        #demo-overlay {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #demo-overlay.hidden-demo {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #demo-overlay.visible-demo {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
-        @keyframes rainDown {
-            0% { top: -40px; opacity: 0; transform: rotate(0deg) translateX(0); }
-            10% { opacity: 1; }
-            50% { transform: rotate(180deg) translateX(10px); } 
-            90% { opacity: 1; }
-            100% { top: 160px; opacity: 0; transform: rotate(360deg) translateX(0); } 
+        /* --- Animación Carrusel Vinilos (HORIZONTAL) --- */
+        .vinyl-track-h {
+            animation: scrollLeft 20s linear infinite;
+            display: flex;
+            width: max-content; 
         }
-        
-        .env1 { left: 15%; animation-duration: 2.5s; animation-delay: 0s; transform: scale(0.9); }
-        .env2 { left: 35%; animation-duration: 3s; animation-delay: 0.5s; transform: scale(1.1); }
-        .env3 { left: 50%; animation-duration: 2.2s; animation-delay: 1.2s; }
-        .env4 { left: 65%; animation-duration: 2.8s; animation-delay: 0.2s; transform: scale(0.95); }
-        .env5 { left: 80%; animation-duration: 3.2s; animation-delay: 0.8s; }
-        .env6 { left: 25%; animation-duration: 2.0s; animation-delay: 1.8s; transform: scale(0.8); }
 
-        .btn {
-            display: inline-flex;
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .fade-mask-h {
+            mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+
+        .vinyl-record {
+            width: 120px;
+            height: 120px;
+            border-radius: 4px;
+            background: #1e1e1e;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 30px;
-            margin-top: 15px;
-            background-color: var(--copper-mid);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(184, 115, 51, 0.3);
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            gap: 10px;
+            overflow: hidden;
+            flex-shrink: 0; 
         }
-
-        .btn:hover {
-            background-color: var(--copper-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(184, 115, 51, 0.4);
+        .vinyl-disc {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #111 20%, #333 21%, #111 22%, #333 30%, #111 31%, #000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
-
-        .btn svg {
-            fill: white;
-            width: 20px;
-            height: 20px;
+        .vinyl-disc::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: conic-gradient(transparent 0deg, rgba(255,255,255,0.1) 45deg, transparent 90deg, rgba(255,255,255,0.1) 225deg, transparent 270deg);
         }
-
-        .fade-in { animation: fadeIn 1.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- ADAPTACIÓN RESPONSIVA --- */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%; 
-                padding-bottom: 30px;
-                /* Importante: para cortar las flores que se salgan del borde blanco */
-                overflow: hidden; 
-            }
-
-            .celebrate-text {
-                font-size: 3.5rem; 
-            }
-
-            .title-design-container {
-                /* RESTAURADO: Altura fija en móvil */
-                height: 280px; 
-                margin-top: 5px;
-            }
-
-            .big-number {
-                font-size: 18rem; 
-                letter-spacing: -15px;
-                margin-top: 0; 
-            }
-
-            .name-overlay {
-                font-size: 5rem; 
-                top: 50%; 
-                margin-bottom: 0;
-            }
-
-            .years-label {
-                font-size: 1.2rem;
-                margin-top: 0;
-            }
-
-            .date-number {
-                font-size: 2.5rem;
-            }
-
-            .intro-text {
-                font-size: 1rem;
-            }
-            
-            .flower-side {
-                width: 50px; 
-                top: -60px;
-            }
-
-            /* 1. OCULTAR FLORES PARALLAX ORIGINALES EN MÓVIL */
-            .parallax-flower {
-                display: none !important; 
-            }
-
-            /* 2. MOSTRAR FLORES ESTÁTICAS SOLO EN MÓVIL */
-            .static-flower {
-                display: block; /* Se muestran */
-                position: absolute;
-                z-index: 0; /* Fondo del contenedor */
-                opacity: 0.6; /* Un poco transparentes para no molestar */
-                /* Filtro igual al original */
-                filter: sepia(0.8) saturate(1.5) hue-rotate(10deg) brightness(0.9);
-                pointer-events: none;
-            }
-
-            /* 3. POSICIONAMIENTO SIMÉTRICO DISTRIBUIDO (MÓVIL) */
-            /* Par Superior - MOVIDAS HACIA EL CENTRO VERTICAL (TOP ALTO) */
-            .sf-1 { width: 150px; top: 11%; left: -30px; transform: rotate(45deg); }
-            .sf-2 { width: 160px; top: 11.5%; right: -40px; transform: rotate(-15deg); }
-            
-            /* Par Medio (Cerca de Fecha/Hora) */
-            .sf-3 { width: 140px; top: 45%; left: -40px; transform: rotate(20deg); }
-            .sf-4 { width: 140px; top: 40%; right: -40px; transform: rotate(-90deg); }
-
-            /* Par Inferior - MOVIDAS HACIA EL CENTRO VERTICAL (BOTTOM ALTO) */
-            .sf-5 { width: 150px; bottom: 13%; left: -30px; transform: rotate(10deg); }
-            .sf-6 { width: 160px; bottom: 18%; right: -40px; transform: rotate(-20deg); }
+        .vinyl-label {
+            width: 35%;
+            height: 35%;
+            border-radius: 50%;
+            z-index: 2;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- SISTEMA DE FONDO (Doble SVG para scroll infinito) -->
-    <div id="background-wrapper">
-        <div id="scrolling-bg"></div>
-    </div>
+    <!-- Fondos Animados -->
+    <div class="background-orb orb-primary"></div>
+    <div class="background-orb orb-secondary"></div>
+    <div class="background-orb orb-accent"></div>
 
-    <!-- CAPA DE FLORES FLOTANTES (PARALLAX - DESKTOP) -->
-    <div class="parallax-wrapper">
-        <img src="https://www.clipartmax.com/png/full/57-570061_beautiful-flower-clipart-fall-watercolor-flowers-png.png" 
-             class="parallax-flower p-flower-1" data-speed="0.1">
-        <img src="https://www.pngall.com/wp-content/uploads/5/Corner-Watercolor-Flower.png" 
-             class="parallax-flower p-flower-2" data-speed="-0.05">
-        <img src="https://static.vecteezy.com/system/resources/previews/013/855/180/non_2x/bouquet-of-pink-watercolor-flowers-free-png.png" 
-             class="parallax-flower p-flower-3" data-speed="0.02">
-        <img src="https://images.vexels.com/media/users/3/294126/isolated/preview/9f80ca53cb77b2695615b308b6979ab6-watercolor-flower-delicate-nature.png" 
-             class="parallax-flower p-flower-4" data-speed="-0.1">
-        <img src="https://png.pngtree.com/png-clipart/20230312/ourmid/pngtree-transparent-watercolor-flowers-png-image_6646331.png" 
-             class="parallax-flower p-flower-5" data-speed="0.03">
-        <img src="https://www.pngplay.com/wp-content/uploads/8/Pink-Water-Color-Flower-Transparent-Image.png" 
-             class="parallax-flower p-flower-6" data-speed="-0.08">
-    </div>
-
-    <div class="container fade-in">
-        
-        <!-- NUEVO: FLORES ESTÁTICAS PARA MÓVIL (DENTRO DEL CONTENEDOR) -->
-        <img src="https://www.clipartmax.com/png/full/57-570061_beautiful-flower-clipart-fall-watercolor-flowers-png.png" class="static-flower sf-1">
-        <img src="https://www.pngall.com/wp-content/uploads/5/Corner-Watercolor-Flower.png" class="static-flower sf-2">
-        <img src="https://static.vecteezy.com/system/resources/previews/013/855/180/non_2x/bouquet-of-pink-watercolor-flowers-free-png.png" class="static-flower sf-3">
-        <img src="https://images.vexels.com/media/users/3/294126/isolated/preview/9f80ca53cb77b2695615b308b6979ab6-watercolor-flower-delicate-nature.png" class="static-flower sf-4">
-        <img src="https://png.pngtree.com/png-clipart/20230312/ourmid/pngtree-transparent-watercolor-flowers-png-image_6646331.png" class="static-flower sf-5">
-        <img src="https://www.pngplay.com/wp-content/uploads/8/Pink-Water-Color-Flower-Transparent-Image.png" class="static-flower sf-6">
-
-        <!-- FLORES SUPERIORES: MISMA IMAGEN QUE ABAJO, ROTADA -->
-        <img src="https://img.freepik.com/vector-premium/flores-hojas-boda_633622-894.jpg" 
-             alt="Decoración floral superior" 
-             class="blend-img flower-top">
-
-        <div class="header">
-            <div class="celebrate-text">
-                ¡Celebramos!
-            </div>
-
-            <!-- DISEÑO 70 CON NOMBRE ARRIBA -->
-            <div class="title-design-container">
-                <span class="big-number">20</span>
-                <div class="name-overlay">Demo</div>
-            </div>
-            
-            <div class="years-label">Años</div>
-        </div>
-
-        <!-- TEXTO Y RAMAS -->
-        <div class="intro-text-container">
-            <div class="side-decoration-container">
-                <img src="https://i.pinimg.com/200x/9c/9e/ba/9c9eba4bb2393099e5030483f5a07d39.jpg" class="blend-img flower-side side-left" alt="rama">
-                <img src="https://i.pinimg.com/200x/9c/9e/ba/9c9eba4bb2393099e5030483f5a07d39.jpg" class="blend-img flower-side side-right" alt="rama">
-            </div>
-
-            <p class="intro-text">
-                Acompáñame a celebrar la alegría de vivir y compartir momentos inolvidables junto a las personas que más quiero.
-            </p>
-        </div>
-
-        <div class="date-section">
-            <div class="date-item">
-                <span class="date-month">Diciembre</span>
-                <span class="date-number">24</span>
-            </div>
-            <div class="divider">|</div>
-            <div class="date-item">
-                <span class="date-month">Miercoles</span>
-                <span class="date-number">2025</span>
-            </div>
-        </div>
-
-        <div class="details-grid">
-            <div class="detail-item">
-                <svg class="icon-svg" viewBox="0 0 24 24">
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
-                </svg>
-                <h3>Hora</h3>
-                <p>10:00 PM</p> 
-            </div>
-            <div class="detail-item">
-                <svg class="icon-svg" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-                <h3>Lugar</h3>
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-panel border-t-0 border-x-0 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 logo-container group cursor-pointer" onclick="window.location.href='#inicio'">
+                    <div class="relative p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 group-hover:border-cyan-400/50 transition-colors">
+                        <i data-lucide="cpu" class="text-cyan-400 w-6 h-6 logo-icon transition-all duration-300"></i>
+                        <div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#0f172a]"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-xl tracking-tight text-white leading-none">Bit<span class="text-cyan-400">Studio</span></span>
+                        <span class="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5">Tech Solutions</span>
+                    </div>
+                </div>
                 
-                <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 5px;">Ubicación del Evento</p> 
-                <p>Parque de Apizaco</p> 
-
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30103.954021799796!2d-98.17867175092745!3d19.41265429589489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d02018b3a0bddd%3A0xa99644cd634bcb3e!2sCdad.%20de%20Apizaco%2C%20Tlax.!5e0!3m2!1ses!2smx!4v1765664564934!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#inicio" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Inicio</a>
+                        <a href="#servicios" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Servicios</a>
+                        <a href="#portafolio" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Portafolio</a>
+                        <button onclick="togglePagos()" class="text-sm font-medium text-blue-300 hover:text-blue-400 transition-colors flex items-center gap-2">
+                            <i class="fa-brands fa-paypal"></i> Pagos
+                        </button>
+                        <!-- BOTÓN MODIFICADO: LINK A WHATSAPP DIRECTO -->
+                        <a href="https://wa.me/message/GTDQYEMHLALMH1?src=qr" target="_blank" class="px-5 py-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all text-sm font-bold">
+                            Contáctame
+                        </a>
+                    </div>
                 </div>
 
-                <a href="https://maps.app.goo.gl/ySpHdFgAk9YW4HfY8" target="_blank" style="color: var(--copper-mid); font-size: 0.9rem;">Ver ubicación en Google Maps</a>
+                <div class="md:hidden">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-300 hover:text-white p-2">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div class="gift-section">
-            <div class="animation-container">
-                <div class="envelope env1"><div class="seal"></div></div>
-                <div class="envelope env2"><div class="seal"></div></div>
-                <div class="envelope env3"><div class="seal"></div></div>
-                <div class="envelope env4"><div class="seal"></div></div>
-                <div class="envelope env5"><div class="seal"></div></div>
-                <div class="envelope env6"><div class="seal"></div></div>
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#inicio" class="block px-3 py-2 rounded-md hover:bg-white/5 text-gray-200">Inicio</a>
+                <a href="#servicios" class="block px-3 py-2 rounded-md hover:bg-white/5 text-gray-200">Servicios</a>
+                <a href="#portafolio" class="block px-3 py-2 rounded-md hover:bg-white/5 text-gray-200">Portafolio</a>
+                <button onclick="togglePagos(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left block px-3 py-2 rounded-md hover:bg-white/5 text-blue-300">
+                    <i class="fa-brands fa-paypal mr-2"></i> Pagos
+                </button>
+                <a href="#contacto" class="block px-3 py-2 rounded-md text-cyan-400 font-bold hover:bg-white/5">Contacto</a>
             </div>
-            <div style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--copper-dark); margin-bottom: 10px;">
-                Lluvia de Sobres
-            </div>
-            <p style="font-style: italic; color: var(--copper-dark); font-size: 0.95rem;">
-                Tu presencia es mi mayor regalo. Si deseas tener un detalle adicional, 
-                podrás depositar un sobre en la cajita que encontrarás en la recepción.
-            </p>
         </div>
+    </nav>
 
-        <div style="margin: 40px 0;">
-            <div style="font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--copper-mid);">
-                Confirmar Asistencia
+    <!-- Overlay de Pagos -->
+    <div id="pagos-overlay" class="hidden-overlay fixed inset-0 z-[60] bg-[#0f172a]/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.15)] max-h-[85vh] overflow-y-auto">
+            <button onclick="togglePagos()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-400 border border-blue-500/30 shrink-0">
+                    <i class="fa-brands fa-paypal text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-2">Métodos de Pago</h2>
+                <p class="text-gray-400 mb-6 text-sm">Realiza tu pago de forma segura a través de PayPal.</p>
+                <div class="space-y-4">
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <p class="text-xs text-blue-300 font-bold uppercase mb-2 tracking-wider">Pago Rápido</p>
+                        <p class="text-sm text-gray-300 mb-3">Haz clic en el botón para pagar directamente con tu cuenta:</p>
+                        <a href="https://paypal.me/BitStudio1240" target="_blank" class="block w-full py-3 bg-[#0070BA] hover:bg-[#005ea6] text-white font-bold rounded-lg transition-colors shadow-lg">
+                            Pagar con PayPal.Me
+                        </a>
+                    </div> 
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-white/10"></div>
+                        <span class="flex-shrink-0 mx-4 text-gray-500 text-xs">O USA EL CORREO</span>
+                        <div class="flex-grow border-t border-white/10"></div>
+                    </div>
+                    <div class="bg-blue-600/10 rounded-xl border border-blue-500/30 relative overflow-hidden transition-all duration-300">
+                        <button onclick="toggleEmailPagos()" class="w-full p-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-blue-300 font-bold uppercase tracking-wider">Opción Recomendada</span>
+                                    <span class="bg-blue-600 text-white text-[9px] px-1.5 py-0.5 font-bold rounded">INFO</span>
+                                </div>
+                                <p class="text-sm font-bold text-white mt-1">Ver datos para Transferencia/Correo</p>
+                            </div>
+                            <i id="chevron-email" data-lucide="chevron-down" class="w-5 h-5 text-blue-300 chevron transition-transform duration-300"></i>
+                        </button>
+                        <div id="email-pagos-content" class="accordion-content px-4 pb-4">
+                            <div class="pt-2 border-t border-white/10">
+                                <p class="text-xs text-blue-300 font-bold uppercase mb-2 tracking-wider mt-2">Instrucciones:</p>
+                                <ol class="text-xs text-gray-300 space-y-1 list-decimal ml-4 mb-4 text-left">
+                                    <li>Entra a tu app de PayPal.</li>
+                                    <li>Selecciona "Enviar" o "Pagar".</li>
+                                    <li>Ingresa el siguiente correo:</li>
+                                </ol>
+                                <div class="bg-black/30 p-3 rounded-lg border border-white/10 flex items-center justify-between group cursor-pointer mb-4" onclick="copiarCorreo()">
+                                    <p class="text-white font-mono text-xs sm:text-sm break-all" id="paypal-email">jesusantoniobarretocastillo02@gmail.com</p>
+                                    <i data-lucide="copy" class="w-5 h-5 text-blue-400 group-hover:text-white transition-colors shrink-0 ml-2"></i>
+                                </div>
+                                <button onclick="copiarCorreo()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg flex items-center justify-center gap-2 text-sm">
+                                    <i class="fa-regular fa-copy"></i> Copiar Correo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-8 text-xs text-gray-500 italic">
+                    * Una vez realizado el pago, por favor envía una captura de pantalla por WhatsApp para confirmar tu pedido.
+                </p>
+                <button onclick="togglePagos()" class="mt-6 text-gray-400 hover:text-white text-sm underline underline-offset-4">
+                    Volver a la página principal
+                </button>
             </div>
-            <p style="margin-bottom: 15px; font-size: 0.9rem;">
-                Favor de confirmar antes del 10 de Mayo
-            </p>
-            
-            <a href="https://wa.me/522411760596?text=Hola%20,%20es%20Demo%20de%20la%20invitacion%20" class="btn">
-                <svg viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                </svg>
-                Confirmar WhatsApp
-            </a>
         </div>
-        
-        <img src="https://img.freepik.com/vector-premium/flores-hojas-boda_633622-894.jpg" 
-             alt="Decoración floral inferior" 
-             class="blend-img flower-bottom">
-
-        <br>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <!-- NUEVO: Overlay de Demo con Menú de Selección (INTEGRADO) -->
+    <div id="demo-overlay" class="hidden-demo fixed inset-0 z-[70] bg-black/95 backdrop-blur-xl flex items-center justify-center p-0 md:p-8">
+        
+        <!-- Contenedor del Dispositivo/Modal -->
+        <div class="w-full h-full max-w-sm md:max-w-[400px] md:h-[800px] bg-[#0f172a] relative shadow-2xl md:rounded-[3rem] overflow-hidden border-8 border-gray-900 flex flex-col">
             
-            /* --- 1. LÓGICA DE PARALLAX VERTICAL (SOLO DESKTOP) --- */
-            window.addEventListener('scroll', () => {
-                // Solo ejecutar si es pantalla grande para optimizar
-                if (window.innerWidth > 768) {
-                    const scrolled = window.scrollY;
-                    document.querySelectorAll('.parallax-flower').forEach((el) => {
-                        const speed = parseFloat(el.getAttribute('data-speed'));
-                        el.style.transform = `translateY(${scrolled * speed}px) rotate(${getRotation(el)}deg)`;
-                    });
-                }
-            });
+            <!-- Notch simulado para desktop -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gray-900 rounded-b-2xl z-20 hidden md:block"></div>
+            
+            <!-- Botón Cerrar (Siempre visible) -->
+            <button onclick="closeDemo()" class="absolute top-4 right-4 md:top-10 md:right-6 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-            function getRotation(el) {
-                if (el.classList.contains('p-flower-1')) return 45;
-                if (el.classList.contains('p-flower-2')) return -15;
-                if (el.classList.contains('p-flower-3')) return 20;
-                if (el.classList.contains('p-flower-4')) return -90;
-                if (el.classList.contains('p-flower-5')) return 10; 
-                if (el.classList.contains('p-flower-6')) return -20; 
-                return 0;
+            <!-- Botón Volver al Menú (Solo visible cuando hay iframe) -->
+            <button id="back-to-menu" onclick="backToMenu()" class="absolute top-4 left-4 md:top-10 md:left-6 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-cyan-500 transition z-50 hidden">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <!-- 1. PANTALLA DE MENÚ DE SELECCIÓN -->
+            <div id="demo-menu" class="w-full h-full flex flex-col items-center justify-center p-6 space-y-8 absolute inset-0 z-30 bg-[#0f172a]">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-cyan-500/30">
+                        <i class="fa-solid fa-mobile-screen text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Selecciona un Estilo</h3>
+                    <p class="text-sm text-gray-400">Explora nuestras plantillas interactivas</p>
+                </div>
+
+                <div class="space-y-4 w-full">
+                    <!-- Opción 1: Clásica -->
+                    <button onclick="loadDemo('invitacion.html')" class="w-full p-4 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/50 hover:bg-white/10 transition-all group text-left flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Estilo Floral</h4>
+                            <p class="text-xs text-gray-400">Clásico, elegante y cálido.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-gray-600 group-hover:text-white"></i>
+                    </button>
+
+                    <!-- Opción 2: Moderna -->
+                    <button onclick="loadDemo('invitacion2.html')" class="w-full p-4 rounded-xl bg-white/5 border border-white/10 hover:border-fuchsia-500/50 hover:bg-white/10 transition-all group text-left flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-fuchsia-900/50 flex items-center justify-center text-fuchsia-400 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Estilo Moderno</h4>
+                            <p class="text-xs text-gray-400">Neon, Dark Mode y animaciones.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-gray-600 group-hover:text-white"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. CONTENEDOR DEL IFRAME (Oculto inicialmente) -->
+            <div id="demo-container" class="w-full h-full relative z-10 hidden">
+                <iframe id="demo-frame" class="w-full h-full" frameborder="0"></iframe>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sección Hero (Inicio) -->
+    <section id="inicio" class="relative pt-40 pb-20 px-4 text-center">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-cyan-500/30 text-cyan-300 text-sm font-semibold mx-auto backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                BitStudio
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white">
+                Bienvenido a <br> <span class="text-gradient">BitStudio</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Tu centro de soluciones digitales. Desde la recuperación de música en alta calidad hasta soporte técnico especializado con Linux.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                <a href="#servicios" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-1">
+                    Explorar Servicios
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Servicios -->
+    <section id="servicios" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Catálogo BitStudio</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 mx-auto rounded-full"></div>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-8 mt-12 ml-2 flex items-center gap-3">
+                <i data-lucide="sparkles" class="text-cyan-400 w-6 h-6"></i> Servicios Digitales
+            </h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Musica -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-cyan-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-cyan-500/10 border border-cyan-500/20 p-3 rounded-xl text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                            <i data-lucide="music" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">MP3 320kbps</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-cyan-300 transition-colors">Descarga de Música</h3>
+                    <p class="text-gray-400 mb-6">Archivos de audio en alta calidad con carátulas y metadatos organizados.</p>
+                    <button onclick="toggleAccordion('content-music', 'chevron-music')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-cyan-500/30">
+                        <span class="text-sm font-semibold text-cyan-200">Ver Precios y Detalles</span>
+                        <i id="chevron-music" data-lucide="chevron-down" class="w-4 h-4 text-cyan-200 chevron"></i>
+                    </button>
+                    <div id="content-music" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-cyan-500 pl-3">Incluye: Artista, Álbum, Año y Carátula original.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Por canción</span>
+                                    <span class="font-bold text-green-400">$ 15 MXN</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Canción FLAC (Lossless)</span>
+                                    <span class="font-bold text-green-400">$ 30 MXN</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Álbum completo</span>
+                                    <span class="font-bold text-green-400">$ 30 MXN</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Playlist (50 canciones)</span>
+                                    <span class="font-bold text-green-400">$ 50 MXN</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-music', 'chevron-music-detail')" class="w-full text-left text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+                                    <i id="chevron-music-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-music" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Lista de canciones (Nombre exacto o link de YouTube).</li>
+                                            <li>Nombre del álbum (si aplica).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>1 a 2 días hábiles (dependiendo cantidad).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invitaciones -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-fuchsia-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-fuchsia-500/10 border border-fuchsia-500/20 p-3 rounded-xl text-fuchsia-400 group-hover:bg-fuchsia-500/20 transition-colors">
+                            <i data-lucide="mail" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Web / Video / IMG</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-fuchsia-300 transition-colors">Invitaciones Digitales</h3>
+                    <p class="text-gray-400 mb-6">Diseños únicos para tus eventos. Desde imágenes sencillas hasta experiencias web interactivas.</p>
+                    <button onclick="toggleAccordion('content-invit', 'chevron-invit')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/5 transition-colors border border-white/5 group-hover:border-fuchsia-500/30">
+                        <span class="text-sm font-semibold text-fuchsia-200">Ver Precios y Detalles</span>
+                        <i id="chevron-invit" data-lucide="chevron-down" class="w-4 h-4 text-fuchsia-200 chevron"></i>
+                    </button>
+                    <div id="content-invit" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-fuchsia-500 pl-3">Ideal para Bodas, XV años, Cumpleaños y Bautizos.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Invitación Estática (IMG)</span>
+                                    <span class="font-bold text-green-400">$ 70 MXN</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Invitación en Video (MP4)</span>
+                                    <span class="font-bold text-green-400">$ 150 MXN</span>
+                                </div>
+                                <!-- MODIFICADO: Eliminado borde morado (border-l-2 border-l-fuchsia-500) -->
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Web Interactiva (PDF+Web)</span>
+                                    <span class="font-bold text-green-400">$ 200 MXN</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-invit', 'chevron-invit-detail')" class="w-full text-left text-xs text-fuchsia-400 hover:text-fuchsia-300 flex items-center gap-2">
+                                    <i id="chevron-invit-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-invit" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Datos del evento (Fecha, Hora, Lugar, Ubicación).</li>
+                                            <li>Nombre del festejado(a).</li>
+                                            <li>Ubicación exacta (Link de Maps) para la versión Web.</li>
+                                            <li>Fotos de buena calidad (opcional).</li>
+                                            <li>Canción de fondo (para video/web).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>2 a 3 días hábiles (Estática).</li>
+                                            <li>4 días hábiles (Video).</li>
+                                            <li>3 a 4 días hábiles (Web Interactiva).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Otros servicios digitales... -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-green-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-green-500/10 border border-green-500/20 p-3 rounded-xl text-green-400 group-hover:bg-green-500/20 transition-colors">
+                            <i data-lucide="file-text" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">PDF Certificado</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-green-300 transition-colors">Trámite de CURP</h3>
+                    <p class="text-gray-400 mb-6">Obtención y descarga de tu documento oficial actualizado al instante.</p>
+                    <button onclick="toggleAccordion('content-curp', 'chevron-curp')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-green-500/30">
+                        <span class="text-sm font-semibold text-green-200">Ver Precios y Detalles</span>
+                        <i id="chevron-curp" data-lucide="chevron-down" class="w-4 h-4 text-green-200 chevron"></i>
+                    </button>
+                    <div id="content-curp" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-green-500 pl-3">Entrega inmediata vía WhatsApp o Correo.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Archivo PDF Digital</span>
+                                    <span class="font-bold text-green-400">$ 20 MXN</span>
+                                </div>
+                                <div class="flex flex-wrap justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5 gap-2">
+                                    <span>Impresión B/N</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-green-400">$ 22 MXN</span>
+                                        <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded whitespace-nowrap">Solo en Físico</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-curp', 'chevron-curp-detail')" class="w-full text-left text-xs text-green-400 hover:text-green-300 flex items-center gap-2">
+                                    <i id="chevron-curp-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-curp" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Nombre completo y fecha de nacimiento.</li>
+                                            <li>Estado de nacimiento.</li>
+                                            <li>O una foto de tu CURP anterior.</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>Medio día aproximadamente.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Acta Nacimiento -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-rose-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-rose-500/10 border border-rose-500/20 p-3 rounded-xl text-rose-400 group-hover:bg-rose-500/20 transition-colors">
+                            <i data-lucide="file-signature" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Documento Oficial</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-rose-300 transition-colors">Acta de Nacimiento</h3>
+                    <p class="text-gray-400 mb-6">Descarga de tu acta certificada actualizada para cualquier trámite legal.</p>
+                    <button onclick="toggleAccordion('content-acta', 'chevron-acta')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-rose-500/30">
+                        <span class="text-sm font-semibold text-rose-200">Ver Precios y Detalles</span>
+                        <i id="chevron-acta" data-lucide="chevron-down" class="w-4 h-4 text-rose-200 chevron"></i>
+                    </button>
+                    <div id="content-acta" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-rose-500 pl-3">
+                                Obtenido directamente de la página oficial <a href="https://www.gob.mx/ActaNacimiento/" target="_blank" class="text-rose-400 underline hover:text-rose-300">gob.mx</a>.
+                            </p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Archivo PDF Certificado</span>
+                                    <span class="font-bold text-green-400 text-xs sm:text-base text-right">Costo Gobierno + $ 20 MXN</span>
+                                </div>
+                                <div class="flex flex-wrap justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5 gap-2">
+                                    <span>Impresión a Color</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-green-400">+ $ 23 MXN</span>
+                                        <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded whitespace-nowrap">Solo en Físico</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-acta', 'chevron-acta-detail')" class="w-full text-left text-xs text-rose-400 hover:text-rose-300 flex items-center gap-2">
+                                    <i id="chevron-acta-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-acta" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Tu CURP.</li>
+                                            <li>Pago por adelantado del costo del trámite gubernamental (varía por estado).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>Medio día aproximadamente (una vez procesado el pago).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-indigo-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-indigo-500/10 border border-indigo-500/20 p-3 rounded-xl text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
+                            <i data-lucide="globe" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Web Development</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-indigo-300 transition-colors">Páginas Web Sencillas</h3>
+                    <p class="text-gray-400 mb-6">Sitios web modernos tipo Landing Page para promocionar tu negocio o perfil.</p>
+                    <button onclick="toggleAccordion('content-web', 'chevron-web')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-indigo-500/30">
+                        <span class="text-sm font-semibold text-indigo-200">Ver Precios y Detalles</span>
+                        <i id="chevron-web" data-lucide="chevron-down" class="w-4 h-4 text-indigo-200 chevron"></i>
+                    </button>
+                    <div id="content-web" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-indigo-500 pl-3">Incluye diseño responsivo (celular/PC) y enlaces a tus redes.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Landing Page (1 Sección)</span>
+                                    <span class="font-bold text-green-400">$ 200 - $ 300 MXN*</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Sitio Personal (CV/Portafolio)</span>
+                                    <span class="font-bold text-green-400">$ 400 MXN</span>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right mt-1">*Precio aproximado, puede variar según requerimientos.</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-web', 'chevron-web-detail')" class="w-full text-left text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-2">
+                                    <i id="chevron-web-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-web" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Información de tu negocio (Nombre, servicios, precios, horarios).</li>
+                                            <li>Logotipo (si tienes) e imágenes de buena calidad.</li>
+                                            <li>Enlaces a tus redes sociales (Facebook, Instagram, WhatsApp).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>1 a 2 semanas (dependiendo complejidad).</li>
+                                        </ul>
+                                        <p class="text-[10px] text-gray-500 mt-2 italic">Nota: No incluye dominio (.com) ni hosting anual, solo el diseño y despliegue gratuito o asesoría para contratación.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logos -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-amber-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-amber-500/10 border border-amber-500/20 p-3 rounded-xl text-amber-400 group-hover:bg-amber-500/20 transition-colors">
+                            <i data-lucide="pen-tool" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Branding</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-amber-300 transition-colors">Logos Minimalistas</h3>
+                    <p class="text-gray-400 mb-6">Diseño de identidad visual limpia y moderna para tu marca o proyecto personal.</p>
+                    <button onclick="toggleAccordion('content-logo', 'chevron-logo')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-amber-500/30">
+                        <span class="text-sm font-semibold text-amber-200">Ver Precios y Detalles</span>
+                        <i id="chevron-logo" data-lucide="chevron-down" class="w-4 h-4 text-amber-200 chevron"></i>
+                    </button>
+                    <div id="content-logo" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-amber-500 pl-3">Se entregan archivos en alta resolución (PNG) y vector editable (PDF).</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Diseño de Logo</span>
+                                    <span class="font-bold text-green-400">Desde $ 250 MXN</span>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right mt-1">*Incluye 2 propuestas de diseño.</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-logo', 'chevron-logo-detail')" class="w-full text-left text-xs text-amber-400 hover:text-amber-300 flex items-center gap-2">
+                                    <i id="chevron-logo-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-logo" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Nombre de tu marca/negocio.</li>
+                                            <li>Giro o actividad (¿qué vendes?).</li>
+                                            <li>Colores de preferencia y estilo deseado.</li>
+                                            <li>Ejemplos de logos que te gusten (referencias).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>2 a 3 días hábiles para propuestas.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lonas -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-teal-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-teal-500/10 border border-teal-500/20 p-3 rounded-xl text-teal-400 group-hover:bg-teal-500/20 transition-colors">
+                            <i data-lucide="image" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Publicidad</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-teal-300 transition-colors">Diseño de Lonas</h3>
+                    <p class="text-gray-400 mb-6">Diseño profesional listo para impresión en gran formato. Ideal para negocios.</p>
+                    <button onclick="toggleAccordion('content-lona', 'chevron-lona')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-teal-500/30">
+                        <span class="text-sm font-semibold text-teal-200">Ver Precios y Detalles</span>
+                        <i id="chevron-lona" data-lucide="chevron-down" class="w-4 h-4 text-teal-200 chevron"></i>
+                    </button>
+                    <div id="content-lona" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-teal-500 pl-3">Archivo PDF (CMYK) listo para imprenta en máxima calidad.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Diseño Publicitario</span>
+                                    <span class="font-bold text-green-400">Desde $ 300 MXN</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-lona', 'chevron-lona-detail')" class="w-full text-left text-xs text-teal-400 hover:text-teal-300 flex items-center gap-2">
+                                    <i id="chevron-lona-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-lona" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Medidas exactas de la lona (ancho x alto).</li>
+                                            <li>Texto e información que llevará.</li>
+                                            <li>Logotipo en alta calidad e imágenes (si aplica).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>1 a 2 semanas.</li>
+                                        </ul>
+                                        <p class="text-[10px] text-gray-500 mt-2 italic">Nota: El precio es solo por el DISEÑO. No incluye impresión física.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investigaciones -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-violet-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-violet-500/10 border border-violet-500/20 p-3 rounded-xl text-violet-400 group-hover:bg-violet-500/20 transition-colors">
+                            <i data-lucide="book-open" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Escolar / Académico</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-violet-300 transition-colors">Investigaciones</h3>
+                    <p class="text-gray-400 mb-6">Redacción y búsqueda de información para tareas escolares de cualquier nivel.</p>
+                    <button onclick="toggleAccordion('content-invest', 'chevron-invest')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-violet-500/30">
+                        <span class="text-sm font-semibold text-violet-200">Ver Precios y Detalles</span>
+                        <i id="chevron-invest" data-lucide="chevron-down" class="w-4 h-4 text-violet-200 chevron"></i>
+                    </button>
+                    <div id="content-invest" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="italic opacity-80 border-l-2 border-violet-500 pl-3">Incluye portada, índice, desarrollo y bibliografía.</p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Investigación Sencilla</span>
+                                    <span class="font-bold text-green-400">$ 100 MXN</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Compleja (+10 págs)</span>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-green-400">Desde $ 180 MXN</span>
+                                        <span class="text-[10px] text-gray-400">+ $ 10 MXN / hoja</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5 gap-2">
+                                    <span>Impresión</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-green-400">+$ 2 MXN / hoja</span>
+                                        <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded whitespace-nowrap">Solo en Físico</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5 gap-2">
+                                    <span>A Mano (si es necesario)</span>
+                                    <div class="flex flex-col items-end gap-1">
+                                        <span class="font-bold text-green-400 text-right">$ 180 base + $ 20 / hoja</span>
+                                        <span class="px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded whitespace-nowrap">Solo en Físico</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-invest', 'chevron-invest-detail')" class="w-full text-left text-xs text-violet-400 hover:text-violet-300 flex items-center gap-2">
+                                    <i id="chevron-invest-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-invest" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Tema exacto a investigar.</li>
+                                            <li>Nivel escolar (Primaria, Secundaria, Prepa, Universidad).</li>
+                                            <li>Formato digital deseado (Word, PDF).</li>
+                                            <li>Estilo de cita (APA, libre) si aplica.</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>Sencilla: 1 día hábil.</li>
+                                            <li>Compleja: 2 a 3 días hábiles.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Fin grid digitales -->
+
+            <!-- --- CATEGORÍA: FÍSICOS --- -->
+            <h3 class="text-2xl font-bold text-white mb-8 mt-16 ml-2 flex items-center gap-3">
+                <i data-lucide="wrench" class="text-orange-400 w-6 h-6"></i> Servicios Físicos
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Servicio 8: Linux Mint -->
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-orange-500 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-orange-500/10 border border-orange-500/20 p-3 rounded-xl text-orange-400 group-hover:bg-orange-500/20 transition-colors">
+                            <i class="fa-brands fa-linux text-2xl"></i>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded">Soporte Técnico</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-orange-300 transition-colors">Instalación Linux Mint</h3>
+                    <p class="text-gray-400 mb-6">Revive tu laptop lenta con un sistema operativo seguro y rápido.</p>
+                    <button onclick="toggleAccordion('content-linux', 'chevron-linux')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-orange-500/30">
+                        <span class="text-sm font-semibold text-orange-200">Ver Precios y Detalles</span>
+                        <i id="chevron-linux" data-lucide="chevron-down" class="w-4 h-4 text-orange-200 chevron"></i>
+                    </button>
+                    <div id="content-linux" class="accordion-content">
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <p class="leading-relaxed border-l-2 border-orange-500 pl-3">
+                                Instalación limpia de <a href="https://www.linuxmint.com/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 decoration-cyan-500/50">Linux Mint</a>, el sistema ideal para renovar equipos antiguos o mejorar privacidad.
+                            </p>
+                            <div class="space-y-2 mt-4">
+                                <div class="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-white/5">
+                                    <span>Instalación Básica</span>
+                                    <span class="font-bold text-green-400">$ 300 MXN</span>
+                                </div>
+                                <div class="bg-black/20 rounded-lg border border-white/5 p-3">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span>Dual Boot (Windows + Linux)</span>
+                                        <span class="font-bold text-green-400">$ 350 MXN</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">
+                                        Te permite tener ambos sistemas y elegir cual usar al encender tu equipo.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10">
+                                <button onclick="toggleAccordion('detail-linux', 'chevron-linux-detail')" class="w-full text-left text-xs text-orange-400 hover:text-orange-300 flex items-center gap-2">
+                                    <i id="chevron-linux-detail" data-lucide="plus-circle" class="w-4 h-4 chevron"></i>
+                                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ver Requisitos y Tiempo de Entrega
+                                </button>
+                                <div id="detail-linux" class="accordion-content">
+                                    <div class="bg-black/40 p-4 rounded-lg mt-2 text-xs text-gray-300">
+                                        <h4 class="font-bold text-white mb-2">Requisitos:</h4>
+                                        <ul class="details-list">
+                                            <li>Laptop o PC con su cargador/cable de corriente.</li>
+                                            <li>Si tienes archivos importantes, se recomienda un respaldo previo (aunque cuidamos tus datos, siempre existe un riesgo mínimo).</li>
+                                        </ul>
+                                        <h4 class="font-bold text-white mt-3 mb-2">Tiempo de Entrega:</h4>
+                                        <ul class="details-list">
+                                            <li>3 a 4 días (se requiere dejar el equipo).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Fin grid físicos -->
+        </div>
+    </section>
+
+    <!-- NUEVA SECCIÓN: Portafolio Detallado -->
+    <section id="portafolio" class="py-24 px-4 mb-20"> <!-- mb-20 para dar espacio al flotante -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Portafolio de Trabajo</h2>
+                <p class="text-gray-400">Ejemplos detallados de la calidad que entregamos.</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 mx-auto rounded-full mt-6"></div>
+            </div>
+
+            <div class="flex flex-col gap-32">
+                
+                <!-- PROYECTO 1: INVITACIÓN (Izquierda Visual, Derecha Texto) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Visual: Teléfono Mockup (Web Interactiva) -->
+                    <div class="relative flex justify-center order-1">
+                        <div class="absolute inset-0 bg-fuchsia-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-64 h-[500px] bg-gray-900 rounded-[2.5rem] border-4 border-gray-800 shadow-2xl overflow-hidden transform group-hover:-rotate-3 transition-transform duration-700">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-20"></div>
+                            <div class="w-full h-full bg-slate-900 overflow-y-auto no-scrollbar relative">
+                                <div class="h-3/5 bg-gradient-to-b from-purple-900 via-fuchsia-900 to-slate-900 flex flex-col items-center justify-center text-center p-4 relative">
+                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
+                                    <span class="text-fuchsia-200 font-serif italic text-lg mb-2">¡Nos casamos!</span>
+                                    <h3 class="text-3xl font-serif font-bold text-white mb-2 drop-shadow-lg">Ana & Carlos</h3>
+                                    <div class="w-full h-px bg-white/30 my-3"></div>
+                                    <div class="flex gap-2 text-white text-[10px] uppercase tracking-widest mt-2">
+                                        <div class="bg-black/30 p-1 rounded">10 Días</div>
+                                        <div class="bg-black/30 p-1 rounded">05 Hrs</div>
+                                    </div>
+                                </div>
+                                <div class="p-6 space-y-4 -mt-10 relative z-10">
+                                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-center shadow-lg">
+                                        <p class="text-xs text-gray-400 uppercase tracking-wide">Ceremonia</p>
+                                        <p class="text-xl font-bold text-white">24 OCT</p>
+                                        <p class="text-sm text-gray-300">5:00 PM</p>
+                                    </div>
+                                    <button class="w-full py-3 bg-white text-fuchsia-900 font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-location-dot"></i> VER UBICACIÓN GPS
+                                    </button>
+                                    <button class="w-full py-3 bg-fuchsia-600 text-white font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
+                                        <i class="fa-brands fa-whatsapp"></i> CONFIRMAR ASISTENCIA
+                                    </button>
+                                    <div class="text-center mt-2">
+                                        <p class="text-[9px] text-gray-500">Código de Vestimenta: Formal</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="order-2 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-400 mb-6">
+                            <i data-lucide="mouse-pointer-click" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Invitaciones Web Interactivas</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Lleva tu evento al siguiente nivel. Entregamos un <strong>PDF elegante</strong> que funciona como "llave" de acceso. Al abrirlo y dar clic, tus invitados son transportados a una <strong>Página Web exclusiva</strong>.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>PDF "Llave":</strong> Un archivo ligero y estético que se envía por WhatsApp. Contiene el botón de acceso.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Experiencia Web:</strong> Cuenta regresiva en tiempo real, galería de fotos, código de vestimenta y música.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Botones Inteligentes:</strong> "Ver Ubicación" abre Google Maps automáticamente y "Confirmar" abre el chat de WhatsApp.</span>
+                            </li>
+                        </ul>
+                        <!-- AQUI ESTA EL BOTON DE DEMO -->
+                        <button onclick="openDemo()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-bold transition-all shadow-lg hover:shadow-fuchsia-500/50 group">
+                            <i class="fa-solid fa-mobile-screen group-hover:animate-pulse"></i> 
+                            <span>Probar Demos en Vivo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: PÁGINA WEB (Texto Izquierda, Visual Derecha) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Texto -->
+                    <div class="order-2 lg:order-1 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 mb-6">
+                            <i data-lucide="layout" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño Web Moderno</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Tu presencia digital comienza aquí. Diseñamos Landing Pages que convierten visitantes en clientes.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Responsive Design:</strong> Se ve perfecto en celulares, tablets y computadoras.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Optimización:</strong> Carga rápida y estructura lista para SEO básico.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Botones de Contacto:</strong> Integración directa con tu WhatsApp y Redes Sociales.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Visual: Browser Mockup -->
+                    <div class="relative flex justify-center order-1 lg:order-2">
+                        <div class="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-lg aspect-video bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden flex flex-col transform group-hover:scale-105 transition-transform duration-700">
+                            <!-- Top Bar -->
+                            <div class="h-8 bg-slate-800 flex items-center px-4 border-b border-slate-700 gap-2">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="flex-1 ml-4 bg-slate-900 h-5 rounded-md flex items-center px-3 text-[10px] text-gray-500 font-mono">
+                                    tunegocio.com
+                                </div>
+                            </div>
+                            <!-- Website Content -->
+                            <div class="flex-1 bg-[#0f172a] relative overflow-hidden p-6 flex items-center">
+                                <div class="w-1/2 space-y-3 z-10">
+                                    <div class="h-1 w-12 bg-indigo-500 rounded-full"></div>
+                                    <h4 class="text-white font-bold text-xl leading-tight">Impulsa tu <br>Emprendimiento</h4>
+                                    <p class="text-gray-500 text-[10px] leading-relaxed">Soluciones creativas para destacar en el mercado. Diseño único y profesional.</p>
+                                    <div class="h-8 w-24 bg-indigo-600 rounded-md mt-2 shadow-lg shadow-indigo-500/20"></div>
+                                </div>
+                                <!-- Abstract Shapes -->
+                                <div class="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-bl from-slate-800 to-transparent opacity-50">
+                                    <div class="absolute top-10 right-6 w-24 h-24 bg-indigo-500/20 rounded-full blur-xl"></div>
+                                    <div class="absolute top-16 right-10 w-20 h-28 bg-slate-700/50 rounded-lg border border-white/5 rotate-6"></div>
+                                    <div class="absolute top-12 right-14 w-20 h-28 bg-slate-800 rounded-lg border border-white/10 -rotate-6 shadow-xl"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3: LOGO (Izquierda Visual, Derecha Texto) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Visual: Brand Board -->
+                    <div class="relative flex justify-center order-1">
+                        <div class="absolute inset-0 bg-amber-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-sm aspect-square bg-neutral-900 rounded-xl border border-neutral-800 shadow-2xl p-8 flex flex-col justify-between transform group-hover:rotate-1 transition-transform duration-700">
+                            <!-- Main Logo Area -->
+                            <div class="flex-1 flex items-center justify-center border-b border-white/5">
+                                <div class="text-center">
+                                    <div class="w-20 h-20 border-2 border-amber-400 rounded-full mx-auto mb-3 flex items-center justify-center relative">
+                                        <i data-lucide="coffee" class="text-amber-400 w-10 h-10"></i>
+                                    </div>
+                                    <h4 class="text-white font-serif font-bold text-2xl tracking-widest">AROMA</h4>
+                                    <p class="text-amber-400 text-[10px] uppercase tracking-[0.3em]">Café de Altura</p>
+                                </div>
+                            </div>
+                            <!-- Variations & Palette -->
+                            <div class="h-24 pt-6 flex justify-between items-center">
+                                <!-- B/W Variant -->
+                                <div class="bg-white p-2 rounded w-16 h-16 flex items-center justify-center">
+                                    <i data-lucide="coffee" class="text-black w-8 h-8"></i>
+                                </div>
+                                <!-- Palette -->
+                                <div class="flex gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 shadow-lg"></div>
+                                    <div class="w-8 h-8 rounded-full bg-neutral-800 border border-white/20 shadow-lg"></div>
+                                    <div class="w-8 h-8 rounded-full bg-[#f5f5dc] shadow-lg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="order-2 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 mb-6">
+                            <i data-lucide="pen-tool" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño de Identidad (Logos)</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Tu marca merece ser recordada. Creamos logotipos minimalistas, escalables y con personalidad única.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Archivos Editables:</strong> Te entregamos el archivo fuente (PDF/Vector) para que lo uses donde quieras.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Alta Resolución:</strong> Archivos PNG con fondo transparente listos para perfiles y marcas de agua.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Paleta de Colores:</strong> Definimos los códigos de color para que tu marca siempre se vea igual.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 4: LONA (Texto Izquierda, Visual Derecha) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Texto -->
+                    <div class="order-2 lg:order-1 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mb-6">
+                            <i data-lucide="image" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño para Impresión (Lonas)</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Diseños de alto impacto visual pensados para ser vistos desde lejos. Ideales para aperturas, ofertas y fachadas.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Formato CMYK:</strong> Colores calibrados específicamente para maquinaria de imprenta.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Máxima Legibilidad:</strong> Uso estratégico de tipografías y contrastes para captar atención.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Medida Exacta:</strong> Archivos listos para mandar a imprimir sin pixelarse.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Visual: Billboard Mockup -->
+                    <div class="relative flex justify-center order-1 lg:order-2">
+                        <div class="absolute inset-0 bg-teal-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-lg aspect-[2/1] bg-gray-800 rounded shadow-2xl p-2 transform group-hover:-translate-y-2 transition-transform duration-700 border-t-2 border-white/10">
+                            <!-- Ojales -->
+                            <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute top-1 right-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute bottom-1 left-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+
+                            <!-- Lona Design -->
+                            <div class="w-full h-full bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between px-8 relative overflow-hidden">
+                                <!-- Shine effect -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
+                                
+                                <div class="text-white z-10">
+                                    <p class="text-xs font-bold bg-yellow-400 text-black inline-block px-2 py-0.5 rounded mb-1">¡YA ABRIMOS!</p>
+                                    <h4 class="text-4xl font-black italic tracking-tighter leading-none">GRAN <br>VENTA</h4>
+                                    <p class="text-[10px] mt-2 opacity-90">Av. Principal #123, Centro</p>
+                                </div>
+                                <div class="text-center z-10">
+                                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg transform rotate-12 border-4 border-yellow-400">
+                                        <div>
+                                            <span class="block text-red-600 font-black text-2xl leading-none">50%</span>
+                                            <span class="block text-red-600 text-[8px] font-bold">DESCUENTO</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 5: INVESTIGACIÓN (Izquierda Visual, Derecha Texto) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Visual: Document Mockup -->
+                    <div class="relative flex justify-center order-1">
+                        <div class="absolute inset-0 bg-violet-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-56 h-72">
+                            <!-- Page 2 (Back) -->
+                            <div class="absolute top-2 left-2 w-full h-full bg-white rounded shadow-sm border border-gray-200 transform rotate-3"></div>
+                            <!-- Page 1 (Front) -->
+                            <div class="absolute top-0 left-0 w-full h-full bg-white rounded shadow-xl border border-gray-200 p-6 flex flex-col transform group-hover:-rotate-2 transition-transform duration-700">
+                                <!-- Header -->
+                                <div class="text-center mb-6">
+                                    <div class="h-3 w-3/4 bg-gray-800 mx-auto rounded mb-2"></div>
+                                    <div class="h-2 w-1/2 bg-gray-400 mx-auto rounded"></div>
+                                </div>
+                                <!-- Content -->
+                                <div class="space-y-2 mb-6">
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-5/6 bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-4/5 bg-gray-300 rounded"></div>
+                                </div>
+                                <!-- Bibliography Section -->
+                                <div class="mt-auto">
+                                    <div class="h-2 w-1/3 bg-gray-500 rounded mb-2"></div>
+                                    <div class="h-1 w-full bg-gray-300 rounded mb-1"></div>
+                                    <div class="h-1 w-3/4 bg-gray-300 rounded"></div>
+                                </div>
+                                <!-- Grade Stamp -->
+                                <div class="absolute top-4 right-4 w-12 h-12 border-2 border-red-500 rounded-full flex items-center justify-center transform rotate-12 opacity-80">
+                                    <span class="text-red-500 font-bold font-serif text-xl">10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="order-2 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-6">
+                            <i data-lucide="book-open" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Investigación Académica</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Ayuda profesional para tus tareas escolares. Redacción clara, investigación profunda y formato impecable.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Formato APA:</strong> Citas y referencias bibliográficas correctamente estructuradas.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Estructura Completa:</strong> Incluimos portada, índice, introducción, desarrollo y conclusión.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Cero Plagio:</strong> Redacción original sintetizando la información de fuentes confiables.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 6: MÚSICA (CARRUSEL INFERIOR HORIZONTAL) -->
+                <div class="relative group">
+                    <!-- Contenedor Superior (Texto + Reproductor) -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                        <!-- Texto -->
+                        <div class="text-left">
+                            <div class="inline-block p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6">
+                                <i data-lucide="music" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Tu Música, Sin Límites</h3>
+                            <p class="text-gray-300 leading-relaxed mb-6">
+                                Recuperamos la calidad que las plataformas de streaming comprimen. Entregamos archivos <strong>FLAC y MP3 (320kbps)</strong> perfectamente etiquetados, con su portada original incrustada.
+                                <br><br>
+                                Olvídate de la publicidad y la dependencia de internet. Construye tu biblioteca personal para siempre.
+                            </p>
+                            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm text-gray-400">
+                                <i data-lucide="headphones" class="w-4 h-4"></i>
+                                <span>Calidad de Estudio Garantizada</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual: Reproductor -->
+                        <div class="flex justify-center">
+                            <div class="relative w-72 bg-neutral-900 rounded-3xl border border-neutral-700 shadow-2xl p-6 transform group-hover:scale-105 transition-transform duration-700 z-10">
+                                <!-- Cover Art -->
+                                <div class="w-full aspect-square bg-gradient-to-tr from-cyan-900 to-blue-900 rounded-2xl mb-6 shadow-lg relative overflow-hidden flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                                    <i data-lucide="music" class="w-16 h-16 text-white/50"></i>
+                                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-yellow-400 border border-yellow-400/30">
+                                        HI-RES LOSSLESS
+                                    </div>
+                                </div>
+                                <div class="mb-6">
+                                    <h4 class="text-white font-bold text-lg leading-tight mb-1">Midnight City</h4>
+                                    <p class="text-gray-400 text-sm">M83 • Hurry Up, We're Dreaming</p>
+                                </div>
+                                <div class="w-full h-1 bg-gray-700 rounded-full mb-2 relative">
+                                    <div class="absolute left-0 top-0 h-full w-2/3 bg-cyan-500 rounded-full"></div>
+                                    <div class="absolute left-2/3 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+                                </div>
+                                <div class="flex justify-between text-[10px] text-gray-500 mb-6">
+                                    <span>2:45</span>
+                                    <span>4:03</span>
+                                </div>
+                                <div class="flex justify-between items-center text-white">
+                                    <i data-lucide="shuffle" class="w-4 h-4 text-gray-500"></i>
+                                    <i data-lucide="skip-back" class="w-6 h-6 hover:text-cyan-400 cursor-pointer"></i>
+                                    <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30 hover:scale-110 transition-transform cursor-pointer">
+                                        <i data-lucide="play" class="w-5 h-5 fill-white"></i>
+                                    </div>
+                                    <i data-lucide="skip-forward" class="w-6 h-6 hover:text-cyan-400 cursor-pointer"></i>
+                                    <i data-lucide="repeat" class="w-4 h-4 text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual: Carrusel Inferior -->
+                    <div class="w-full h-32 overflow-hidden fade-mask-h relative mt-8">
+                        <div class="vinyl-track-h flex gap-6 absolute top-0 left-0 h-full items-center">
+                            <!-- Bloque 1 -->
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-cyan-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-purple-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-pink-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-yellow-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-green-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-red-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-blue-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-orange-500"></div></div></div>
+                            <!-- Bloque 2 (Duplicado) -->
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-cyan-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-purple-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-pink-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-yellow-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-green-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-red-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-blue-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-orange-500"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVO: BARRA FLOTANTE DE CONTACTO (Sustituye la sección fija) -->
+    <div id="floating-contact" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 transition-transform duration-500 w-[90%] max-w-md">
+        <div class="glass-panel rounded-2xl p-4 border border-white/20 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl bg-[#0f172a]/90">
+            
+            <!-- Texto de Contacto -->
+            <div class="text-center mb-3">
+                <h3 class="text-white font-bold text-lg leading-tight">Contacto</h3>
+                <p class="text-xs text-gray-400 mt-1">¿Listo para mejorar tu vida digital? Estamos aquí para ayudarte.</p>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex items-center justify-between gap-3">
+                <a href="https://wa.me/message/GTDQYEMHLALMH1?src=qr" target="_blank" class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600/90 hover:bg-green-600/100 text-white font-bold text-sm transition-all shadow-lg group">
+                    <i class="fa-brands fa-whatsapp text-lg group-hover:scale-110 transition-transform"></i>
+                    WhatsApp
+                </a>
+                
+                <a href="mailto:jesusantoniobarretocastillo02@gmail.com" class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold text-sm transition-all group">
+                    <i data-lucide="mail" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    Correo
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="glass-panel py-8 mt-12 text-center border-b-0 border-x-0 relative z-10 bg-[#0f172a]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+                    <i data-lucide="cpu" class="text-cyan-400 w-5 h-5"></i>
+                    <span class="font-bold text-white">BitStudio</span>
+                </div>
+                <p class="text-gray-500 text-xs">© 2025 BitStudio. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar iconos Lucide
+        lucide.createIcons();
+
+        // Lógica para cerrar el menú móvil automáticamente
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Lógica del Acordeón para los precios y detalles
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // --- Lógica Nueva para la Sección de Pagos ---
+        function togglePagos() {
+            const overlay = document.getElementById('pagos-overlay');
+            if (overlay.classList.contains('hidden-overlay')) {
+                overlay.classList.remove('hidden-overlay');
+                overlay.classList.add('visible-overlay');
+            } else {
+                overlay.classList.remove('visible-overlay');
+                overlay.classList.add('hidden-overlay');
+            }
+        }
+
+        function toggleEmailPagos() {
+            const content = document.getElementById('email-pagos-content');
+            const icon = document.getElementById('chevron-email');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function copyingCorreo() {
+            const correo = document.getElementById('paypal-email').innerText;
+            navigator.clipboard.writeText(correo).then(() => {
+                alert('Correo copiado al portapapeles');
+            });
+        }
+
+        // --- Lógica Scroll para Barra Flotante ---
+        let lastScrollTop = 0;
+        const floatingContact = document.getElementById('floating-contact');
+
+        window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Si estamos muy arriba (inicio), mostrar siempre
+            if (scrollTop < 100) {
+                floatingContact.classList.remove('translate-y-[200%]');
+                return;
             }
 
-            // --- 2. FONDO SVG ---
-            const flowerPaths = [
-                "M167.1,256.6c-56.6,98-155.6-73.5-42.4-73.5c-113.1,0-14.1-171.5,42.4-73.5c-56.6-98,141.4-98,84.8,0 c56.6-98,155.6,73.5,42.4,73.5c113.1,0,14.1,171.5-42.4,73.5C308.5,354.6,110.5,354.6,167.1,256.6z",
-                "M496.2,251.5c-37.7,91.1-131.2-2.3-40-40c-91.1,37.7-91.1-94.4,0-56.6c-91.1-37.7,2.3-131.2,40-40 c-37.7-91.1,94.4-91.1,56.6,0c37.7-91.1,131.2,2.3,40,40c91.1-37.7,91.1,94.4,0,56.6c91.1,37.7-2.3,131.2-40,40 C590.6,342.6,458.4,342.6,496.2,251.5z",
-                "M814.9,244c-47.7,81.2-106.3,22.6-25.1-25.1c-92.3,36.5-98.6,21.4-7.5-18c-91.1,23.7-91.1-59.1,0-35.5 c-91.1-39.4-84.9-54.6,7.5-18c-81.2-47.7-22.6-106.3,25.1-25.1c-36.5-92.3-21.4-98.6,18-7.5c-23.7-91.1,59.1-91.1,35.5,0 c39.4-91.1,54.6-84.9,18,7.5c47.7-81.2,106.3-22.6,25.1,25.1c92.3-36.5,98.6-21.4,7.5,18c91.1-23.7,91.1,59.1,0,35.5 c91.1,39.4,84.9,54.6-7.5,18c81.2,47.7,22.6,106.3-25.1,25.1c36.5,92.3,21.4,98.6-18,7.5c23.7,91.1-59.1,91.1-35.5,0 C793.5,342.6,778.4,336.3,814.9,244z",
-                "M161.2,532.1C96.8,596.6,96.8,596.6,161.2,532.1c-94.3,34.5-111.2-6-20-48.3c-91.1,0-91.1,0,0,0 c-91.1-42.3-74.3-82.9,20-48.3c-64.4-64.4-64.4-64.4,0,0c-34.5-94.3,6-111.2,48.3-20c0-91.1,0-91.1,0,0c42.3-91.1,82.9-74.3,48.3,20 c64.4-64.4,64.4-64.4,0,0c94.3-34.5,111.2,6,20,48.3c91.1,0,91.1,0,0,0c91.1,42.3,74.3,82.9-20,48.3c64.4,64.4,64.4,64.4,0,0 c34.5,94.3-6,111.2-48.3,20c0,91.1,0,91.1,0,0C167.2,643.3,126.7,626.5,161.2,532.1z",
-                "M482.4,538.4c-56.1,72.8-85.3,43.6-12.5-12.5c-93.3,35.5-104.9,7.7-13.8-33.2c-91.1,11.8-91.1-29.5,0-17.7 c-91.1-40.9-79.6-68.7,13.8-33.2c-72.8-56.1-43.6-85.3,12.5-12.5c-35.5-93.3-7.7-104.9,33.2-13.8c-11.8-91.1,29.5-91.1,17.7,0 c40.9-91.1,68.7-79.6,33.2,13.8c56.1-72.8,85.3-43.6,12.5,12.5c93.3-35.5,104.9-7.7,13.8,33.2c91.1-11.8,91.1,29.5,0,17.7 c91.1,40.9,79.6,68.7-13.8,33.2c72.8,56.1,43.6,85.3-12.5,12.5c35.5,93.3,7.7,104.9-33.2,13.8c11.8,91.1-29.5,91.1-17.7,0 C474.8,643.3,446.9,631.7,482.4,538.4z",
-                "M820.1,549.9c-40.8,88.1-123.6,5.3-35.5-35.5c-91.5,37.4-93.4,32.8-2.3-5.5c-91.1,33.5-91.1-83.7,0-50.2 c-91.1-38.3-89.2-42.9,2.3-5.5c-88.1-40.8-5.3-123.6,35.5-35.5c-37.4-91.5-32.8-93.4,5.5-2.3c-33.5-91.1,83.7-91.1,50.2,0 c38.3-91.1,42.9-89.2,5.5,2.3c40.8-88.1,123.6-5.3,35.5,35.5c91.5-37.4,93.4-32.8,2.3,5.5c91.1-33.5,91.1,83.7,0,50.2 c91.1,38.3,89.2,42.9-2.3,5.5c88.1,40.8,5.3,123.6-35.5,35.5c37.4,91.5,32.8,93.4-5.5,2.3c33.5,91.1-83.7,91.1-50.2,0 C787.3,643.3,782.7,641.4,820.1,549.9z",
-                "M1157.8,241.9c-43.5,78.4-74.2,56-13.2-9.6c-77.7,53.5-90,36.5-15.1-20.8c-81.3,37.8-93,1.7-5-15.5 c-94.3-2.4-94.3-23.4,0-25.7c-88-17.2-76.2-53.3,5-15.5c-74.9-57.3-62.5-74.4,15.1-20.8c-61.1-65.6-30.3-87.9,13.2-9.6 c-26.9-90.4-6.9-96.9,24.5-8c-10.9-89,27.1-89,16.3,0c31.4-89,51.4-82.5,24.5,8c43.5-78.4,74.2-56,13.2,9.6 c77.7-53.5,90-36.5,15.1,20.8c81.3-37.8,93-1.7,5,15.5c94.3,2.4,94.3,23.4,0,25.7c88,17.2,76.2,53.3-5,15.5 c74.9,57.3,62.5,74.4-15.1,20.8c61.1,65.6,30.3,87.9-13.2,9.6c26.9,90.4,6.9,96.9-24.5,8c10.9,89-27.1,89-16.3,0 C1150.9,338.8,1130.9,332.3,1157.8,241.9z",
-                "M1157.1,586.5c-16.7,51.3-97.7-7.5-54-39.2c-43.7,31.7-74.6-63.5-20.6-63.5c-54,0-23.1-95.2,20.6-63.5 c-43.7-31.7,37.3-90.6,54-39.2c-16.7-51.3,83.4-51.3,66.7,0c16.7-51.3,97.7,7.5,54,39.2c43.7-31.7,74.6,63.5,20.6,63.5 c54,0,23.1,95.2-20.6,63.5c43.7,31.7-37.3,90.6-54,39.2C1240.5,637.8,1140.4,637.8,1157.1,586.5z"
-            ];
+            if (scrollTop > lastScrollTop) {
+                // Scroll hacia abajo -> Ocultar
+                floatingContact.classList.add('translate-y-[200%]');
+            } else {
+                // Scroll hacia arriba -> Mostrar
+                floatingContact.classList.remove('translate-y-[200%]');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Para Mobile
+        }, false);
 
-            const copperColors = ['#8B4513', '#A0522D', '#B87333', '#CD7F32', '#D2691E', '#5D4037', '#8D6E63'];
+        // --- Lógica para el Modal de Demo (ACTUALIZADA CON MENÚ) ---
+        
+        // 1. Abrir el modal mostrando el MENÚ
+        function openDemo() { 
+            const overlay = document.getElementById('demo-overlay');
+            const menu = document.getElementById('demo-menu');
+            const container = document.getElementById('demo-container');
+            const backBtn = document.getElementById('back-to-menu');
 
-            const buildSVGBlock = () => {
-                let svgContent = `<svg class="bg-svg-layer" viewBox="0 0 1400 980" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">`;
-                flowerData.forEach(data => {
-                    svgContent += `<path d="${data.d}" fill="${data.color}" fill-opacity="0.3" style="transform-box: fill-box; transform-origin: center; animation: rotateFlower ${data.duration}s linear infinite ${data.direction};"/>`;
-                });
-                svgContent += `</svg>`;
-                return svgContent;
-            };
+            // Resetear estado
+            menu.classList.remove('hidden');
+            container.classList.add('hidden');
+            backBtn.classList.add('hidden');
+            
+            overlay.classList.remove('hidden-demo');
+            overlay.classList.add('visible-demo');
+        }
 
-            const flowerData = flowerPaths.map(d => ({
-                d: d,
-                color: copperColors[Math.floor(Math.random() * copperColors.length)],
-                duration: Math.random() * (60 - 20) + 20,
-                direction: Math.random() < 0.5 ? 'normal' : 'reverse'
-            }));
+        // 2. Cargar una demo específica desde el menú
+        function loadDemo(url) {
+            const menu = document.getElementById('demo-menu');
+            const container = document.getElementById('demo-container');
+            const iframe = document.getElementById('demo-frame');
+            const backBtn = document.getElementById('back-to-menu');
 
-            const container = document.getElementById('scrolling-bg');
-            container.innerHTML = buildSVGBlock() + buildSVGBlock();
-        });
+            menu.classList.add('hidden'); // Ocultar menú
+            container.classList.remove('hidden'); // Mostrar iframe
+            backBtn.classList.remove('hidden'); // Mostrar botón volver
+
+            iframe.src = url; // Cargar página
+        }
+
+        // 3. Volver del iframe al menú
+        function backToMenu() {
+            const menu = document.getElementById('demo-menu');
+            const container = document.getElementById('demo-container');
+            const iframe = document.getElementById('demo-frame');
+            const backBtn = document.getElementById('back-to-menu');
+
+            iframe.src = ''; // Detener carga/audio
+            
+            container.classList.add('hidden');
+            backBtn.classList.add('hidden');
+            menu.classList.remove('hidden');
+        }
+
+        // 4. Cerrar todo el modal
+        function closeDemo() {
+            const iframe = document.getElementById('demo-frame');
+            const overlay = document.getElementById('demo-overlay');
+            
+            overlay.classList.remove('visible-demo');
+            overlay.classList.add('hidden-demo');
+            
+            setTimeout(() => {
+                iframe.src = ''; // Limpiar src
+            }, 300);
+        }
+
     </script>
-
 </body>
 </html>
