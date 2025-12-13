@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación 70 Años - Angeles</title>
+    <!-- Fuentes de Google: Agregada 'Pinyon Script' para el nombre -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #FAF3E0;
+            --copper-dark: #8B4513;      
+            --copper-mid: #B87333;        
+            --copper-orange: #D2691E;   
+            --copper-gold: #DAA520;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Lato', sans-serif;
+            color: var(--copper-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- CLASES DECORATIVAS --- */
+        .blend-img {
+            mix-blend-mode: multiply; 
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .flower-top {
+            width: 80%;
+            margin: -20px auto 10px auto; 
+            position: relative;
+            z-index: 10;
+            /* MODIFICADO: Rotación de 180 grados para que la flor de abajo se vea bien arriba */
+            transform: rotate(180deg); 
+        }
+
+        .flower-bottom {
+            width: 90%;
+            margin: 20px auto 0 auto;
+            opacity: 0.9;
+        }
+
+        .side-decoration-container {
+            position: relative;
+            width: 100%;
+            height: 0; 
+            overflow: visible;
+            z-index: 0;
+        }
+
+        .flower-side {
+            position: absolute;
+            width: 80px; 
+            opacity: 0.7;
+            top: -100px; 
+        }
+
+        .side-left {
+            left: -10px;
+            transform: scaleX(-1); 
+        }
+
+        .side-right {
+            right: -10px;
+        }
+
+        /* --- PARALLAX (Flores flotantes - Desktop) --- */
+        .parallax-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: 20; 
+            overflow: hidden;
+        }
+
+        .parallax-flower {
+            position: absolute;
+            filter: sepia(0.8) saturate(1.5) hue-rotate(10deg) brightness(0.9) blur(1px);
+            opacity: 0.9; 
+            transition: transform 0.1s linear; 
+            height: auto;
+        }
+
+        /* Posiciones Parallax (Centro en Esquina - Desktop) */
+        .p-flower-1 { top: -17.5vw; left: -17.5vw; width: 35vw; transform: rotate(45deg); }
+        .p-flower-2 { top: -22.5vw; right: -22.5vw; width: 45vw; transform: rotate(-15deg); }
+        .p-flower-3 { bottom: -20vw; left: -20vw; width: 40vw; transform: rotate(20deg); }
+        .p-flower-4 { top: 50%; right: -17.5vw; width: 35vw; margin-top: -17.5vw; transform: rotate(-90deg); }
+        .p-flower-5 { top: 15vw; left: -9vw; width: 25vw; transform: rotate(10deg); }
+        .p-flower-6 { top: auto; bottom: -21vw; right: -21vw; width: 42vw; transform: rotate(-20deg); }
+
+        /* --- FLORES ESTÁTICAS (Móvil) --- */
+        /* Por defecto ocultas en escritorio */
+        .static-flower {
+            display: none;
+        }
+
+        /* --- FONDO ANIMADO --- */
+        #background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            overflow: hidden;
+            opacity: 0.2; 
+            pointer-events: none;
+        }
+
+        #scrolling-bg {
+            width: 100%;
+            animation: scrollUp 40s linear infinite; 
+        }
+
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .bg-svg-layer {
+            display: block;
+            width: 100%;
+            height: auto; 
+        }
+
+        @keyframes rotateFlower {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.5); 
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(250, 243, 224, 0.9)); 
+            box-shadow: 0 0 40px rgba(139, 69, 19, 0.15);
+            min-height: 100vh;
+            text-align: center;
+            padding-bottom: 50px;
+            padding-top: 20px; 
+            border-left: 1px solid rgba(184, 115, 51, 0.2);
+            border-right: 1px solid rgba(184, 115, 51, 0.2);
+            position: relative;
+            z-index: 1; 
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--copper-mid);
+        }
+
+        .header {
+            padding-top: 10px;
+            padding-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .celebrate-text {
+            font-family: 'Great Vibes', cursive; 
+            font-size: 5rem; 
+            color: var(--copper-dark); 
+            margin-bottom: -10px;
+            margin-top: 20px;
+            line-height: 1.1;
+        }
+
+        /* --- MODIFICACIÓN DEL TÍTULO 70 Y NOMBRE (STACK VERTICAL) --- */
+        .title-design-container {
+            position: relative;
+            /* RESTAURADO: Altura fija para soportar posicionamiento absoluto */
+            height: 450px; 
+            display: flex;
+            /* RESTAURADO: Sin flex-direction column para que el absolute funcione sobre el centro */
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            z-index: 5; 
+            overflow: visible; 
+        }
+
+        .big-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 30rem; 
+            line-height: 0.8; 
+            color: var(--copper-mid); 
+            background: linear-gradient(45deg, #8B4513, #B87333, #D4AF37, #B87333);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -25px; 
+            /* RESTAURADO: Margen normal */
+            margin-top: 0;
+        }
+
+        /* Estilo para "Angeles" SOBREPUESTO AL NUMERO */
+        .name-overlay {
+            /* RESTAURADO: Posición absoluta centrada */
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            /* Centrado absoluto + leve inclinación */
+            transform: translate(-50%, -50%) rotate(-5deg); 
+            
+            font-family: 'Pinyon Script', cursive; 
+            font-size: 8rem; 
+            color: var(--copper-dark);
+            
+            text-shadow: 
+                4px 4px 0px rgba(255, 255, 255, 0.95),
+                -3px -3px 0 rgba(255, 255, 255, 0.95),  
+                3px -3px 0 rgba(255, 255, 255, 0.95),
+                -3px 3px 0 rgba(255, 255, 255, 0.95),
+                0px 0px 15px rgba(255, 255, 255, 1);
+            
+            white-space: nowrap;
+            z-index: 10;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .years-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; 
+            color: var(--copper-mid);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 10px; 
+            margin-bottom: 30px;
+        }
+
+        .date-section {
+            margin: 30px 20px;
+            border-top: 1px solid var(--copper-mid);
+            border-bottom: 1px solid var(--copper-mid);
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .date-number {
+            font-size: 3.5rem;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            color: var(--copper-mid);
+        }
+
+        .date-month {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--copper-mid);
+        }
+
+        .divider {
+            color: var(--copper-mid);
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .intro-text-container {
+            position: relative;
+            padding: 20px 30px;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-style: italic;
+            position: relative;
+            z-index: 2; 
+        }
+
+        .details-grid {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 0 20px;
+        }
+        
+        .detail-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .icon-svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--copper-mid);
+            margin-bottom: 10px;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(184, 115, 51, 0.2);
+            border: 1px solid rgba(184, 115, 51, 0.3);
+        }
+        
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .gift-section {
+            margin: 50px 20px;
+            padding: 20px 15px 30px 15px;
+            background-color: rgba(184, 115, 51, 0.05);
+            border-radius: 10px;
+        }
+        
+        .animation-container {
+            position: relative;
+            height: 150px; 
+            width: 100%;
+            margin: 0 auto 20px auto;
+            overflow: hidden; 
+            border-bottom: 2px solid var(--copper-mid);
+        }
+
+        .envelope {
+            position: absolute;
+            width: 50px; 
+            height: 35px;
+            background: #fff;
+            border: 1px solid #e0e0e0; 
+            z-index: 1;
+            top: -40px; 
+            animation: rainDown linear infinite; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            border-radius: 2px;
+        }
+        
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 18px 25px 0 25px; 
+            border-color: #f0f0f0 transparent transparent transparent; 
+            z-index: 2;
+            transform-origin: top;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 25px 15px 25px; 
+            border-color: transparent transparent #fafafa transparent;
+            border-bottom-color: #f5f5f5;
+            z-index: 1;
+        }
+
+        .seal {
+            position: absolute;
+            width: 8px; height: 8px;
+            background: var(--copper-mid);
+            border-radius: 50%;
+            top: 14px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            border: 1px solid var(--copper-dark);
+        }
+
+        @keyframes rainDown {
+            0% { top: -40px; opacity: 0; transform: rotate(0deg) translateX(0); }
+            10% { opacity: 1; }
+            50% { transform: rotate(180deg) translateX(10px); } 
+            90% { opacity: 1; }
+            100% { top: 160px; opacity: 0; transform: rotate(360deg) translateX(0); } 
+        }
+        
+        .env1 { left: 15%; animation-duration: 2.5s; animation-delay: 0s; transform: scale(0.9); }
+        .env2 { left: 35%; animation-duration: 3s; animation-delay: 0.5s; transform: scale(1.1); }
+        .env3 { left: 50%; animation-duration: 2.2s; animation-delay: 1.2s; }
+        .env4 { left: 65%; animation-duration: 2.8s; animation-delay: 0.2s; transform: scale(0.95); }
+        .env5 { left: 80%; animation-duration: 3.2s; animation-delay: 0.8s; }
+        .env6 { left: 25%; animation-duration: 2.0s; animation-delay: 1.8s; transform: scale(0.8); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 30px;
+            margin-top: 15px;
+            background-color: var(--copper-mid);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(184, 115, 51, 0.3);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--copper-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(184, 115, 51, 0.4);
+        }
+
+        .btn svg {
+            fill: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        .fade-in { animation: fadeIn 1.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- ADAPTACIÓN RESPONSIVA --- */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%; 
+                padding-bottom: 30px;
+                /* Importante: para cortar las flores que se salgan del borde blanco */
+                overflow: hidden; 
+            }
+
+            .celebrate-text {
+                font-size: 3.5rem; 
+            }
+
+            .title-design-container {
+                /* RESTAURADO: Altura fija en móvil */
+                height: 280px; 
+                margin-top: 5px;
+            }
+
+            .big-number {
+                font-size: 18rem; 
+                letter-spacing: -15px;
+                margin-top: 0; 
+            }
+
+            .name-overlay {
+                font-size: 5rem; 
+                top: 50%; 
+                margin-bottom: 0;
+            }
+
+            .years-label {
+                font-size: 1.2rem;
+                margin-top: 0;
+            }
+
+            .date-number {
+                font-size: 2.5rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+            }
+            
+            .flower-side {
+                width: 50px; 
+                top: -60px;
+            }
+
+            /* 1. OCULTAR FLORES PARALLAX ORIGINALES EN MÓVIL */
+            .parallax-flower {
+                display: none !important; 
+            }
+
+            /* 2. MOSTRAR FLORES ESTÁTICAS SOLO EN MÓVIL */
+            .static-flower {
+                display: block; /* Se muestran */
+                position: absolute;
+                z-index: 0; /* Fondo del contenedor */
+                opacity: 0.6; /* Un poco transparentes para no molestar */
+                /* Filtro igual al original */
+                filter: sepia(0.8) saturate(1.5) hue-rotate(10deg) brightness(0.9);
+                pointer-events: none;
+            }
+
+            /* 3. POSICIONAMIENTO SIMÉTRICO DISTRIBUIDO (MÓVIL) */
+            /* Par Superior - MOVIDAS HACIA EL CENTRO VERTICAL (TOP ALTO) */
+            .sf-1 { width: 150px; top: 11%; left: -30px; transform: rotate(45deg); }
+            .sf-2 { width: 160px; top: 11.5%; right: -40px; transform: rotate(-15deg); }
+            
+            /* Par Medio (Cerca de Fecha/Hora) */
+            .sf-3 { width: 140px; top: 45%; left: -40px; transform: rotate(20deg); }
+            .sf-4 { width: 140px; top: 40%; right: -40px; transform: rotate(-90deg); }
+
+            /* Par Inferior - MOVIDAS HACIA EL CENTRO VERTICAL (BOTTOM ALTO) */
+            .sf-5 { width: 150px; bottom: 13%; left: -30px; transform: rotate(10deg); }
+            .sf-6 { width: 160px; bottom: 18%; right: -40px; transform: rotate(-20deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- SISTEMA DE FONDO (Doble SVG para scroll infinito) -->
+    <div id="background-wrapper">
+        <div id="scrolling-bg"></div>
+    </div>
+
+    <!-- CAPA DE FLORES FLOTANTES (PARALLAX - DESKTOP) -->
+    <div class="parallax-wrapper">
+        <img src="https://www.clipartmax.com/png/full/57-570061_beautiful-flower-clipart-fall-watercolor-flowers-png.png" 
+             class="parallax-flower p-flower-1" data-speed="0.1">
+        <img src="https://www.pngall.com/wp-content/uploads/5/Corner-Watercolor-Flower.png" 
+             class="parallax-flower p-flower-2" data-speed="-0.05">
+        <img src="https://static.vecteezy.com/system/resources/previews/013/855/180/non_2x/bouquet-of-pink-watercolor-flowers-free-png.png" 
+             class="parallax-flower p-flower-3" data-speed="0.02">
+        <img src="https://images.vexels.com/media/users/3/294126/isolated/preview/9f80ca53cb77b2695615b308b6979ab6-watercolor-flower-delicate-nature.png" 
+             class="parallax-flower p-flower-4" data-speed="-0.1">
+        <img src="https://png.pngtree.com/png-clipart/20230312/ourmid/pngtree-transparent-watercolor-flowers-png-image_6646331.png" 
+             class="parallax-flower p-flower-5" data-speed="0.03">
+        <img src="https://www.pngplay.com/wp-content/uploads/8/Pink-Water-Color-Flower-Transparent-Image.png" 
+             class="parallax-flower p-flower-6" data-speed="-0.08">
+    </div>
+
+    <div class="container fade-in">
+        
+        <!-- NUEVO: FLORES ESTÁTICAS PARA MÓVIL (DENTRO DEL CONTENEDOR) -->
+        <img src="https://www.clipartmax.com/png/full/57-570061_beautiful-flower-clipart-fall-watercolor-flowers-png.png" class="static-flower sf-1">
+        <img src="https://www.pngall.com/wp-content/uploads/5/Corner-Watercolor-Flower.png" class="static-flower sf-2">
+        <img src="https://static.vecteezy.com/system/resources/previews/013/855/180/non_2x/bouquet-of-pink-watercolor-flowers-free-png.png" class="static-flower sf-3">
+        <img src="https://images.vexels.com/media/users/3/294126/isolated/preview/9f80ca53cb77b2695615b308b6979ab6-watercolor-flower-delicate-nature.png" class="static-flower sf-4">
+        <img src="https://png.pngtree.com/png-clipart/20230312/ourmid/pngtree-transparent-watercolor-flowers-png-image_6646331.png" class="static-flower sf-5">
+        <img src="https://www.pngplay.com/wp-content/uploads/8/Pink-Water-Color-Flower-Transparent-Image.png" class="static-flower sf-6">
+
+        <!-- FLORES SUPERIORES: MISMA IMAGEN QUE ABAJO, ROTADA -->
+        <img src="https://img.freepik.com/vector-premium/flores-hojas-boda_633622-894.jpg" 
+             alt="Decoración floral superior" 
+             class="blend-img flower-top">
+
+        <div class="header">
+            <div class="celebrate-text">
+                ¡Celebramos!
+            </div>
+
+            <!-- DISEÑO 70 CON NOMBRE ARRIBA -->
+            <div class="title-design-container">
+                <span class="big-number">70</span>
+                <div class="name-overlay">Angeles</div>
+            </div>
+            
+            <div class="years-label">Años</div>
+        </div>
+
+        <!-- TEXTO Y RAMAS -->
+        <div class="intro-text-container">
+            <div class="side-decoration-container">
+                <img src="https://i.pinimg.com/200x/9c/9e/ba/9c9eba4bb2393099e5030483f5a07d39.jpg" class="blend-img flower-side side-left" alt="rama">
+                <img src="https://i.pinimg.com/200x/9c/9e/ba/9c9eba4bb2393099e5030483f5a07d39.jpg" class="blend-img flower-side side-right" alt="rama">
+            </div>
+
+            <p class="intro-text">
+                Acompáñame a celebrar la alegría de vivir y compartir momentos inolvidables junto a las personas que más quiero.
+            </p>
+        </div>
+
+        <div class="date-section">
+            <div class="date-item">
+                <span class="date-month">Mayo</span>
+                <span class="date-number">23</span>
+            </div>
+            <div class="divider">|</div>
+            <div class="date-item">
+                <span class="date-month">Sábado</span>
+                <span class="date-number">2026</span>
+            </div>
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-item">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+                </svg>
+                <h3>Hora</h3>
+                <p>2:30 PM</p> 
+            </div>
+            <div class="detail-item">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <h3>Lugar</h3>
+                
+                <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 5px;">Ubicación del Evento</p> 
+                <p>Gomez Farias No. 210, Apizaco, Tlaxcala</p> 
+
+                <div class="map-container">
+                    <iframe class="map-iframe" 
+                            src="https://maps.google.com/maps?q=19.4138432,-98.1340485&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                    </iframe>
+                </div>
+
+                <a href="https://www.google.com/maps/search/?api=1&query=19.4138432,-98.1340485" target="_blank" style="color: var(--copper-mid); font-size: 0.9rem;">Ver ubicación en Google Maps</a>
+            </div>
+        </div>
+
+        <div class="gift-section">
+            <div class="animation-container">
+                <div class="envelope env1"><div class="seal"></div></div>
+                <div class="envelope env2"><div class="seal"></div></div>
+                <div class="envelope env3"><div class="seal"></div></div>
+                <div class="envelope env4"><div class="seal"></div></div>
+                <div class="envelope env5"><div class="seal"></div></div>
+                <div class="envelope env6"><div class="seal"></div></div>
+            </div>
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--copper-dark); margin-bottom: 10px;">
+                Lluvia de Sobres
+            </div>
+            <p style="font-style: italic; color: var(--copper-dark); font-size: 0.95rem;">
+                Tu presencia es mi mayor regalo. Si deseas tener un detalle adicional, 
+                podrás depositar un sobre en la cajita que encontrarás en la recepción.
+            </p>
+        </div>
+
+        <div style="margin: 40px 0;">
+            <div style="font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--copper-mid);">
+                Confirmar Asistencia
+            </div>
+            <p style="margin-bottom: 15px; font-size: 0.9rem;">
+                Favor de confirmar antes del 10 de Mayo
+            </p>
+            
+            <a href="https://wa.me/2411760596?text=Hola%20Angeles,%20confirmo%20mi%20asistencia%20a%20tu%20cumpleaños" class="btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                Confirmar WhatsApp
+            </a>
+        </div>
+        
+        <img src="https://img.freepik.com/vector-premium/flores-hojas-boda_633622-894.jpg" 
+             alt="Decoración floral inferior" 
+             class="blend-img flower-bottom">
+
+        <br>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* --- 1. LÓGICA DE PARALLAX VERTICAL (SOLO DESKTOP) --- */
+            window.addEventListener('scroll', () => {
+                // Solo ejecutar si es pantalla grande para optimizar
+                if (window.innerWidth > 768) {
+                    const scrolled = window.scrollY;
+                    document.querySelectorAll('.parallax-flower').forEach((el) => {
+                        const speed = parseFloat(el.getAttribute('data-speed'));
+                        el.style.transform = `translateY(${scrolled * speed}px) rotate(${getRotation(el)}deg)`;
+                    });
+                }
+            });
+
+            function getRotation(el) {
+                if (el.classList.contains('p-flower-1')) return 45;
+                if (el.classList.contains('p-flower-2')) return -15;
+                if (el.classList.contains('p-flower-3')) return 20;
+                if (el.classList.contains('p-flower-4')) return -90;
+                if (el.classList.contains('p-flower-5')) return 10; 
+                if (el.classList.contains('p-flower-6')) return -20; 
+                return 0;
+            }
+
+            // --- 2. FONDO SVG ---
+            const flowerPaths = [
+                "M167.1,256.6c-56.6,98-155.6-73.5-42.4-73.5c-113.1,0-14.1-171.5,42.4-73.5c-56.6-98,141.4-98,84.8,0 c56.6-98,155.6,73.5,42.4,73.5c113.1,0,14.1,171.5-42.4,73.5C308.5,354.6,110.5,354.6,167.1,256.6z",
+                "M496.2,251.5c-37.7,91.1-131.2-2.3-40-40c-91.1,37.7-91.1-94.4,0-56.6c-91.1-37.7,2.3-131.2,40-40 c-37.7-91.1,94.4-91.1,56.6,0c37.7-91.1,131.2,2.3,40,40c91.1-37.7,91.1,94.4,0,56.6c91.1,37.7-2.3,131.2-40,40 C590.6,342.6,458.4,342.6,496.2,251.5z",
+                "M814.9,244c-47.7,81.2-106.3,22.6-25.1-25.1c-92.3,36.5-98.6,21.4-7.5-18c-91.1,23.7-91.1-59.1,0-35.5 c-91.1-39.4-84.9-54.6,7.5-18c-81.2-47.7-22.6-106.3,25.1-25.1c-36.5-92.3-21.4-98.6,18-7.5c-23.7-91.1,59.1-91.1,35.5,0 c39.4-91.1,54.6-84.9,18,7.5c47.7-81.2,106.3-22.6,25.1,25.1c92.3-36.5,98.6-21.4,7.5,18c91.1-23.7,91.1,59.1,0,35.5 c91.1,39.4,84.9,54.6-7.5,18c81.2,47.7,22.6,106.3-25.1,25.1c36.5,92.3,21.4,98.6-18,7.5c23.7,91.1-59.1,91.1-35.5,0 C793.5,342.6,778.4,336.3,814.9,244z",
+                "M161.2,532.1C96.8,596.6,96.8,596.6,161.2,532.1c-94.3,34.5-111.2-6-20-48.3c-91.1,0-91.1,0,0,0 c-91.1-42.3-74.3-82.9,20-48.3c-64.4-64.4-64.4-64.4,0,0c-34.5-94.3,6-111.2,48.3-20c0-91.1,0-91.1,0,0c42.3-91.1,82.9-74.3,48.3,20 c64.4-64.4,64.4-64.4,0,0c94.3-34.5,111.2,6,20,48.3c91.1,0,91.1,0,0,0c91.1,42.3,74.3,82.9-20,48.3c64.4,64.4,64.4,64.4,0,0 c34.5,94.3-6,111.2-48.3,20c0,91.1,0,91.1,0,0C167.2,643.3,126.7,626.5,161.2,532.1z",
+                "M482.4,538.4c-56.1,72.8-85.3,43.6-12.5-12.5c-93.3,35.5-104.9,7.7-13.8-33.2c-91.1,11.8-91.1-29.5,0-17.7 c-91.1-40.9-79.6-68.7,13.8-33.2c-72.8-56.1-43.6-85.3,12.5-12.5c-35.5-93.3-7.7-104.9,33.2-13.8c-11.8-91.1,29.5-91.1,17.7,0 c40.9-91.1,68.7-79.6,33.2,13.8c56.1-72.8,85.3-43.6,12.5,12.5c93.3-35.5,104.9-7.7,13.8,33.2c91.1-11.8,91.1,29.5,0,17.7 c91.1,40.9,79.6,68.7-13.8,33.2c72.8,56.1,43.6,85.3-12.5,12.5c35.5,93.3,7.7,104.9-33.2,13.8c11.8,91.1-29.5,91.1-17.7,0 C474.8,643.3,446.9,631.7,482.4,538.4z",
+                "M820.1,549.9c-40.8,88.1-123.6,5.3-35.5-35.5c-91.5,37.4-93.4,32.8-2.3-5.5c-91.1,33.5-91.1-83.7,0-50.2 c-91.1-38.3-89.2-42.9,2.3-5.5c-88.1-40.8-5.3-123.6,35.5-35.5c-37.4-91.5-32.8-93.4,5.5-2.3c-33.5-91.1,83.7-91.1,50.2,0 c38.3-91.1,42.9-89.2,5.5,2.3c40.8-88.1,123.6-5.3,35.5,35.5c91.5-37.4,93.4-32.8,2.3,5.5c91.1-33.5,91.1,83.7,0,50.2 c91.1,38.3,89.2,42.9-2.3,5.5c88.1,40.8,5.3,123.6-35.5,35.5c37.4,91.5,32.8,93.4-5.5,2.3c33.5,91.1-83.7,91.1-50.2,0 C787.3,643.3,782.7,641.4,820.1,549.9z",
+                "M1157.8,241.9c-43.5,78.4-74.2,56-13.2-9.6c-77.7,53.5-90,36.5-15.1-20.8c-81.3,37.8-93,1.7-5-15.5 c-94.3-2.4-94.3-23.4,0-25.7c-88-17.2-76.2-53.3,5-15.5c-74.9-57.3-62.5-74.4,15.1-20.8c-61.1-65.6-30.3-87.9,13.2-9.6 c-26.9-90.4-6.9-96.9,24.5-8c-10.9-89,27.1-89,16.3,0c31.4-89,51.4-82.5,24.5,8c43.5-78.4,74.2-56,13.2,9.6 c77.7-53.5,90-36.5,15.1,20.8c81.3-37.8,93-1.7,5,15.5c94.3,2.4,94.3,23.4,0,25.7c88,17.2,76.2,53.3-5,15.5 c74.9,57.3,62.5,74.4-15.1,20.8c61.1,65.6,30.3,87.9-13.2,9.6c26.9,90.4,6.9,96.9-24.5,8c10.9,89-27.1,89-16.3,0 C1150.9,338.8,1130.9,332.3,1157.8,241.9z",
+                "M1157.1,586.5c-16.7,51.3-97.7-7.5-54-39.2c-43.7,31.7-74.6-63.5-20.6-63.5c-54,0-23.1-95.2,20.6-63.5 c-43.7-31.7,37.3-90.6,54-39.2c-16.7-51.3,83.4-51.3,66.7,0c16.7-51.3,97.7,7.5,54,39.2c43.7-31.7,74.6,63.5,20.6,63.5 c54,0,23.1,95.2-20.6,63.5c43.7,31.7-37.3,90.6-54,39.2C1240.5,637.8,1140.4,637.8,1157.1,586.5z"
+            ];
+
+            const copperColors = ['#8B4513', '#A0522D', '#B87333', '#CD7F32', '#D2691E', '#5D4037', '#8D6E63'];
+
+            const buildSVGBlock = () => {
+                let svgContent = `<svg class="bg-svg-layer" viewBox="0 0 1400 980" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">`;
+                flowerData.forEach(data => {
+                    svgContent += `<path d="${data.d}" fill="${data.color}" fill-opacity="0.3" style="transform-box: fill-box; transform-origin: center; animation: rotateFlower ${data.duration}s linear infinite ${data.direction};"/>`;
+                });
+                svgContent += `</svg>`;
+                return svgContent;
+            };
+
+            const flowerData = flowerPaths.map(d => ({
+                d: d,
+                color: copperColors[Math.floor(Math.random() * copperColors.length)],
+                duration: Math.random() * (60 - 20) + 20,
+                direction: Math.random() < 0.5 ? 'normal' : 'reverse'
+            }));
+
+            const container = document.getElementById('scrolling-bg');
+            container.innerHTML = buildSVGBlock() + buildSVGBlock();
+        });
+    </script>
+
+</body>
+</html>
