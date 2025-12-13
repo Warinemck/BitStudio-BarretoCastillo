@@ -185,7 +185,7 @@
             pointer-events: auto;
         }
 
-        /* --- Estilo para el Overlay de DEMO (NUEVO) --- */
+        /* --- Estilo para el Overlay de DEMO (NUEVO/ACTUALIZADO) --- */
         #demo-overlay {
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
@@ -377,7 +377,7 @@
         </div>
     </div>
 
-    <!-- NUEVO: Overlay de Demo con Menú de Selección -->
+    <!-- NUEVO: Overlay de Demo con Menú de Selección (INTEGRADO) -->
     <div id="demo-overlay" class="hidden-demo fixed inset-0 z-[70] bg-black/95 backdrop-blur-xl flex items-center justify-center p-0 md:p-8">
         
         <!-- Contenedor del Dispositivo/Modal -->
@@ -467,7 +467,6 @@
 
     <!-- Sección de Servicios -->
     <section id="servicios" class="py-20 px-4">
-        <!-- ... (Contenido de servicios igual) ... -->
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Catálogo BitStudio</h2>
@@ -535,7 +534,7 @@
                     </div>
                 </div>
 
-                <!-- Invitaciones (Aquí va el botón de demo) -->
+                <!-- Invitaciones -->
                 <div class="glass-card p-8 rounded-3xl border-l-4 border-fuchsia-500 group">
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-fuchsia-500/10 border border-fuchsia-500/20 p-3 rounded-xl text-fuchsia-400 group-hover:bg-fuchsia-500/20 transition-colors">
@@ -545,7 +544,7 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-fuchsia-300 transition-colors">Invitaciones Digitales</h3>
                     <p class="text-gray-400 mb-6">Diseños únicos para tus eventos. Desde imágenes sencillas hasta experiencias web interactivas.</p>
-                    <button onclick="toggleAccordion('content-invit', 'chevron-invit')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group-hover:border-fuchsia-500/30">
+                    <button onclick="toggleAccordion('content-invit', 'chevron-invit')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/5 transition-colors border border-white/5 group-hover:border-fuchsia-500/30">
                         <span class="text-sm font-semibold text-fuchsia-200">Ver Precios y Detalles</span>
                         <i id="chevron-invit" data-lucide="chevron-down" class="w-4 h-4 text-fuchsia-200 chevron"></i>
                     </button>
@@ -594,9 +593,7 @@
                     </div>
                 </div>
 
-                <!-- Los demás servicios (CURP, Actas, Web, Logos, Lonas, Linux) van aquí igual que antes... -->
-                <!-- (Resumido para brevedad en esta respuesta, el código original ya los incluye) -->
-                <!-- Servicio 3: CURP -->
+                <!-- Otros servicios digitales... -->
                 <div class="glass-card p-8 rounded-3xl border-l-4 border-green-500 group">
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-green-500/10 border border-green-500/20 p-3 rounded-xl text-green-400 group-hover:bg-green-500/20 transition-colors">
@@ -992,6 +989,30 @@
         </div>
     </section>
 
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="py-20 px-4">
+        <div class="max-w-3xl mx-auto glass-panel rounded-3xl p-10 text-center border border-white/10 relative overflow-hidden group">
+            <!-- Efecto de brillo interior -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <h2 class="text-3xl font-bold text-white mb-6">¿Listo para mejorar tu vida digital?</h2>
+            <p class="text-gray-300 mb-8">
+                Contáctanos hoy mismo. En <span class="text-cyan-400 font-bold">BitStudio</span> estamos listos para ayudarte.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/message/GTDQYEMHLALMH1?src=qr" target="_blank" class="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-green-600/20 hover:bg-green-600/40 border border-green-500/30 text-green-400 font-bold transition-all group-btn">
+                    <i class="fa-brands fa-whatsapp text-xl group-btn-hover:scale-110 transition-transform"></i>
+                    WhatsApp
+                </a>
+                <a href="mailto:jesusantoniobarretocastillo02@gmail.com" class="flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-all group-btn">
+                    <i data-lucide="mail" class="w-5 h-5 group-btn-hover:scale-110 transition-transform"></i>
+                    Correo Electrónico
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- NUEVA SECCIÓN: Portafolio Detallado -->
     <section id="portafolio" class="py-24 px-4 mb-20"> <!-- mb-20 para dar espacio al flotante -->
         <div class="max-w-7xl mx-auto">
@@ -1005,45 +1026,36 @@
                 
                 <!-- PROYECTO 1: INVITACIÓN (Izquierda Visual, Derecha Texto) -->
                 <div class="grid lg:grid-cols-2 gap-12 items-center group">
-                    <!-- Visual: Teléfono Mockup (Video/Imagen) -->
+                    <!-- Visual: Teléfono Mockup (Web Interactiva) -->
                     <div class="relative flex justify-center order-1">
-                        <!-- Glow effect -->
                         <div class="absolute inset-0 bg-fuchsia-500/20 blur-[100px] rounded-full"></div>
-                        
-                        <!-- Phone Frame -->
                         <div class="relative w-64 h-[500px] bg-gray-900 rounded-[2.5rem] border-4 border-gray-800 shadow-2xl overflow-hidden transform group-hover:-rotate-3 transition-transform duration-700">
-                            <!-- Notch -->
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-20"></div>
-                            
-                            <!-- Screen Content (WhatsApp Chat Style) -->
-                            <div class="w-full h-full bg-[#0b141a] overflow-hidden relative flex flex-col">
-                                <!-- Chat Header -->
-                                <div class="h-16 bg-[#1f2c34] flex items-center px-4 gap-3 pt-4">
-                                    <div class="w-8 h-8 rounded-full bg-gray-500"></div>
-                                    <div class="w-24 h-2 bg-gray-600 rounded"></div>
+                            <div class="w-full h-full bg-slate-900 overflow-y-auto no-scrollbar relative">
+                                <div class="h-3/5 bg-gradient-to-b from-purple-900 via-fuchsia-900 to-slate-900 flex flex-col items-center justify-center text-center p-4 relative">
+                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
+                                    <span class="text-fuchsia-200 font-serif italic text-lg mb-2">¡Nos casamos!</span>
+                                    <h3 class="text-3xl font-serif font-bold text-white mb-2 drop-shadow-lg">Ana & Carlos</h3>
+                                    <div class="w-full h-px bg-white/30 my-3"></div>
+                                    <div class="flex gap-2 text-white text-[10px] uppercase tracking-widest mt-2">
+                                        <div class="bg-black/30 p-1 rounded">10 Días</div>
+                                        <div class="bg-black/30 p-1 rounded">05 Hrs</div>
+                                    </div>
                                 </div>
-                                
-                                <!-- Message Bubble (Video/Image Preview) -->
-                                <div class="p-4 flex justify-end">
-                                    <div class="bg-[#005c4b] p-1 rounded-lg rounded-tr-none w-48 shadow-md">
-                                        <!-- Media Content -->
-                                        <div class="aspect-[9/16] bg-gradient-to-br from-purple-900 to-fuchsia-900 rounded-lg relative flex items-center justify-center overflow-hidden mb-1">
-                                            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
-                                            <div class="text-center p-2">
-                                                <p class="text-fuchsia-200 font-serif italic text-xs">Mis XV Años</p>
-                                                <h3 class="text-xl font-serif font-bold text-white drop-shadow-md">Valentina</h3>
-                                                <p class="text-white text-[10px] mt-2">24 OCT • 5:00 PM</p>
-                                            </div>
-                                            <!-- Play Button Overlay -->
-                                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                                <div class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
-                                                    <i class="fa-solid fa-play text-white text-sm ml-1"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-end px-1 pb-1">
-                                            <span class="text-[10px] text-white/60">17:42 <i class="fa-solid fa-check-double text-blue-400 ml-1"></i></span>
-                                        </div>
+                                <div class="p-6 space-y-4 -mt-10 relative z-10">
+                                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-center shadow-lg">
+                                        <p class="text-xs text-gray-400 uppercase tracking-wide">Ceremonia</p>
+                                        <p class="text-xl font-bold text-white">24 OCT</p>
+                                        <p class="text-sm text-gray-300">5:00 PM</p>
+                                    </div>
+                                    <button class="w-full py-3 bg-white text-fuchsia-900 font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-location-dot"></i> VER UBICACIÓN GPS
+                                    </button>
+                                    <button class="w-full py-3 bg-fuchsia-600 text-white font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
+                                        <i class="fa-brands fa-whatsapp"></i> CONFIRMAR ASISTENCIA
+                                    </button>
+                                    <div class="text-center mt-2">
+                                        <p class="text-[9px] text-gray-500">Código de Vestimenta: Formal</p>
                                     </div>
                                 </div>
                             </div>
@@ -1052,34 +1064,6 @@
 
                     <!-- Texto -->
                     <div class="order-2 text-left">
-                        <div class="inline-block p-3 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-400 mb-6">
-                            <i data-lucide="image" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold text-white mb-4">Invitaciones (Imagen y Video)</h3>
-                        <p class="text-gray-300 leading-relaxed mb-6">
-                            Diseños visuales de alto impacto listos para compartir. Olvídate de imprimir, envía tu invitación al instante por WhatsApp.
-                        </p>
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
-                                <span class="text-gray-400 text-sm"><strong>Formato Imagen (JPG):</strong> Alta resolución, colores vibrantes y texto legible. Ideal para estados o envío rápido.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
-                                <span class="text-gray-400 text-sm"><strong>Formato Video (MP4):</strong> Animaciones elegantes, música de fondo y efectos visuales que sorprenden.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-fuchsia-500 mt-1 w-5 h-5"></i>
-                                <span class="text-gray-400 text-sm"><strong>Ligero y Compatible:</strong> Optimizados para que se vean bien en cualquier celular sin consumir muchos datos.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 1.5: INVITACIÓN WEB INTERACTIVA (Izquierda Texto, Derecha Visual) -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center group">
-                    <!-- Texto -->
-                    <div class="order-2 lg:order-1 text-left">
                         <div class="inline-block p-3 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-400 mb-6">
                             <i data-lucide="mouse-pointer-click" class="w-8 h-8"></i>
                         </div>
@@ -1101,56 +1085,186 @@
                                 <span class="text-gray-400 text-sm"><strong>Botones Inteligentes:</strong> "Ver Ubicación" abre Google Maps automáticamente y "Confirmar" abre el chat de WhatsApp.</span>
                             </li>
                         </ul>
-                        <!-- BOTON DE DEMO (MODIFICADO: Sin URL, abre menú) -->
+                        <!-- AQUI ESTA EL BOTON DE DEMO -->
                         <button onclick="openDemo()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-bold transition-all shadow-lg hover:shadow-fuchsia-500/50 group">
                             <i class="fa-solid fa-mobile-screen group-hover:animate-pulse"></i> 
                             <span>Probar Demos en Vivo</span>
                         </button>
-                        <p class="text-xs text-gray-500 mt-3 ml-2 italic">*Haz clic para elegir entre nuestros estilos de invitación.</p>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: PÁGINA WEB (Texto Izquierda, Visual Derecha) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Texto -->
+                    <div class="order-2 lg:order-1 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 mb-6">
+                            <i data-lucide="layout" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño Web Moderno</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Tu presencia digital comienza aquí. Diseñamos Landing Pages que convierten visitantes en clientes.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Responsive Design:</strong> Se ve perfecto en celulares, tablets y computadoras.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Optimización:</strong> Carga rápida y estructura lista para SEO básico.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-indigo-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Botones de Contacto:</strong> Integración directa con tu WhatsApp y Redes Sociales.</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- Visual: Teléfono Mockup (Web Interactiva) -->
+                    <!-- Visual: Browser Mockup -->
                     <div class="relative flex justify-center order-1 lg:order-2">
-                        <!-- Glow effect -->
-                        <div class="absolute inset-0 bg-fuchsia-500/20 blur-[100px] rounded-full"></div>
-                        
-                        <!-- Phone Frame -->
-                        <div class="relative w-64 h-[500px] bg-gray-900 rounded-[2.5rem] border-4 border-gray-800 shadow-2xl overflow-hidden transform group-hover:-rotate-3 transition-transform duration-700">
-                            <!-- Notch -->
-                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-20"></div>
-                            
-                            <!-- Screen Content: Web Invitation -->
-                            <div class="w-full h-full bg-slate-900 overflow-y-auto no-scrollbar relative">
-                                <!-- Hero Section -->
-                                <div class="h-3/5 bg-gradient-to-b from-purple-900 via-fuchsia-900 to-slate-900 flex flex-col items-center justify-center text-center p-4 relative">
-                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
-                                    <span class="text-fuchsia-200 font-serif italic text-lg mb-2">¡Nos casamos!</span>
-                                    <h3 class="text-3xl font-serif font-bold text-white mb-2 drop-shadow-lg">Ana & Carlos</h3>
-                                    <div class="w-full h-px bg-white/30 my-3"></div>
-                                    
-                                    <!-- Countdown Simulated -->
-                                    <div class="flex gap-2 text-white text-[10px] uppercase tracking-widest mt-2">
-                                        <div class="bg-black/30 p-1 rounded">10 Días</div>
-                                        <div class="bg-black/30 p-1 rounded">05 Hrs</div>
-                                    </div>
+                        <div class="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-lg aspect-video bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden flex flex-col transform group-hover:scale-105 transition-transform duration-700">
+                            <!-- Top Bar -->
+                            <div class="h-8 bg-slate-800 flex items-center px-4 border-b border-slate-700 gap-2">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                
-                                <!-- Interactive Buttons Section -->
-                                <div class="p-6 space-y-4 -mt-10 relative z-10">
-                                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-center shadow-lg">
-                                        <p class="text-xs text-gray-400 uppercase tracking-wide">Ceremonia</p>
-                                        <p class="text-xl font-bold text-white">24 OCT</p>
-                                        <p class="text-sm text-gray-300">5:00 PM</p>
+                                <div class="flex-1 ml-4 bg-slate-900 h-5 rounded-md flex items-center px-3 text-[10px] text-gray-500 font-mono">
+                                    tunegocio.com
+                                </div>
+                            </div>
+                            <!-- Website Content -->
+                            <div class="flex-1 bg-[#0f172a] relative overflow-hidden p-6 flex items-center">
+                                <div class="w-1/2 space-y-3 z-10">
+                                    <div class="h-1 w-12 bg-indigo-500 rounded-full"></div>
+                                    <h4 class="text-white font-bold text-xl leading-tight">Impulsa tu <br>Emprendimiento</h4>
+                                    <p class="text-gray-500 text-[10px] leading-relaxed">Soluciones creativas para destacar en el mercado. Diseño único y profesional.</p>
+                                    <div class="h-8 w-24 bg-indigo-600 rounded-md mt-2 shadow-lg shadow-indigo-500/20"></div>
+                                </div>
+                                <!-- Abstract Shapes -->
+                                <div class="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-bl from-slate-800 to-transparent opacity-50">
+                                    <div class="absolute top-10 right-6 w-24 h-24 bg-indigo-500/20 rounded-full blur-xl"></div>
+                                    <div class="absolute top-16 right-10 w-20 h-28 bg-slate-700/50 rounded-lg border border-white/5 rotate-6"></div>
+                                    <div class="absolute top-12 right-14 w-20 h-28 bg-slate-800 rounded-lg border border-white/10 -rotate-6 shadow-xl"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3: LOGO (Izquierda Visual, Derecha Texto) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Visual: Brand Board -->
+                    <div class="relative flex justify-center order-1">
+                        <div class="absolute inset-0 bg-amber-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-sm aspect-square bg-neutral-900 rounded-xl border border-neutral-800 shadow-2xl p-8 flex flex-col justify-between transform group-hover:rotate-1 transition-transform duration-700">
+                            <!-- Main Logo Area -->
+                            <div class="flex-1 flex items-center justify-center border-b border-white/5">
+                                <div class="text-center">
+                                    <div class="w-20 h-20 border-2 border-amber-400 rounded-full mx-auto mb-3 flex items-center justify-center relative">
+                                        <i data-lucide="coffee" class="text-amber-400 w-10 h-10"></i>
                                     </div>
-                                    
-                                    <button class="w-full py-3 bg-white text-fuchsia-900 font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
-                                        <i class="fa-solid fa-location-dot"></i> VER UBICACIÓN GPS
-                                    </button>
-                                    <button class="w-full py-3 bg-fuchsia-600 text-white font-bold rounded-full shadow-lg text-xs flex items-center justify-center gap-2 transform hover:scale-105 transition-transform">
-                                        <i class="fa-brands fa-whatsapp"></i> CONFIRMAR ASISTENCIA
-                                    </button>
-                                    <div class="text-center mt-2">
-                                        <p class="text-[9px] text-gray-500">Código de Vestimenta: Formal</p>
+                                    <h4 class="text-white font-serif font-bold text-2xl tracking-widest">AROMA</h4>
+                                    <p class="text-amber-400 text-[10px] uppercase tracking-[0.3em]">Café de Altura</p>
+                                </div>
+                            </div>
+                            <!-- Variations & Palette -->
+                            <div class="h-24 pt-6 flex justify-between items-center">
+                                <!-- B/W Variant -->
+                                <div class="bg-white p-2 rounded w-16 h-16 flex items-center justify-center">
+                                    <i data-lucide="coffee" class="text-black w-8 h-8"></i>
+                                </div>
+                                <!-- Palette -->
+                                <div class="flex gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-400 shadow-lg"></div>
+                                    <div class="w-8 h-8 rounded-full bg-neutral-800 border border-white/20 shadow-lg"></div>
+                                    <div class="w-8 h-8 rounded-full bg-[#f5f5dc] shadow-lg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="order-2 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 mb-6">
+                            <i data-lucide="pen-tool" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño de Identidad (Logos)</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Tu marca merece ser recordada. Creamos logotipos minimalistas, escalables y con personalidad única.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Archivos Editables:</strong> Te entregamos el archivo fuente (PDF/Vector) para que lo uses donde quieras.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Alta Resolución:</strong> Archivos PNG con fondo transparente listos para perfiles y marcas de agua.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-amber-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Paleta de Colores:</strong> Definimos los códigos de color para que tu marca siempre se vea igual.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 4: LONA (Texto Izquierda, Visual Derecha) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Texto -->
+                    <div class="order-2 lg:order-1 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 mb-6">
+                            <i data-lucide="image" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Diseño para Impresión (Lonas)</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Diseños de alto impacto visual pensados para ser vistos desde lejos. Ideales para aperturas, ofertas y fachadas.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Formato CMYK:</strong> Colores calibrados específicamente para maquinaria de imprenta.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Máxima Legibilidad:</strong> Uso estratégico de tipografías y contrastes para captar atención.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-teal-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Medida Exacta:</strong> Archivos listos para mandar a imprimir sin pixelarse.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Visual: Billboard Mockup -->
+                    <div class="relative flex justify-center order-1 lg:order-2">
+                        <div class="absolute inset-0 bg-teal-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-full max-w-lg aspect-[2/1] bg-gray-800 rounded shadow-2xl p-2 transform group-hover:-translate-y-2 transition-transform duration-700 border-t-2 border-white/10">
+                            <!-- Ojales -->
+                            <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute top-1 right-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute bottom-1 left-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+                            <div class="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-gray-400 ring-1 ring-black z-20"></div>
+
+                            <!-- Lona Design -->
+                            <div class="w-full h-full bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between px-8 relative overflow-hidden">
+                                <!-- Shine effect -->
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
+                                
+                                <div class="text-white z-10">
+                                    <p class="text-xs font-bold bg-yellow-400 text-black inline-block px-2 py-0.5 rounded mb-1">¡YA ABRIMOS!</p>
+                                    <h4 class="text-4xl font-black italic tracking-tighter leading-none">GRAN <br>VENTA</h4>
+                                    <p class="text-[10px] mt-2 opacity-90">Av. Principal #123, Centro</p>
+                                </div>
+                                <div class="text-center z-10">
+                                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg transform rotate-12 border-4 border-yellow-400">
+                                        <div>
+                                            <span class="block text-red-600 font-black text-2xl leading-none">50%</span>
+                                            <span class="block text-red-600 text-[8px] font-bold">DESCUENTO</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1158,9 +1272,151 @@
                     </div>
                 </div>
 
-                <!-- PROYECTO 2: PÁGINA WEB -->
-                <!-- ... (resto del portafolio igual) ... -->
-                <!-- Abreviado para no exceder limite, resto de proyectos se mantienen igual -->
+                <!-- PROYECTO 5: INVESTIGACIÓN (Izquierda Visual, Derecha Texto) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center group">
+                    <!-- Visual: Document Mockup -->
+                    <div class="relative flex justify-center order-1">
+                        <div class="absolute inset-0 bg-violet-500/20 blur-[100px] rounded-full"></div>
+                        <div class="relative w-56 h-72">
+                            <!-- Page 2 (Back) -->
+                            <div class="absolute top-2 left-2 w-full h-full bg-white rounded shadow-sm border border-gray-200 transform rotate-3"></div>
+                            <!-- Page 1 (Front) -->
+                            <div class="absolute top-0 left-0 w-full h-full bg-white rounded shadow-xl border border-gray-200 p-6 flex flex-col transform group-hover:-rotate-2 transition-transform duration-700">
+                                <!-- Header -->
+                                <div class="text-center mb-6">
+                                    <div class="h-3 w-3/4 bg-gray-800 mx-auto rounded mb-2"></div>
+                                    <div class="h-2 w-1/2 bg-gray-400 mx-auto rounded"></div>
+                                </div>
+                                <!-- Content -->
+                                <div class="space-y-2 mb-6">
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-5/6 bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-full bg-gray-300 rounded"></div>
+                                    <div class="h-1.5 w-4/5 bg-gray-300 rounded"></div>
+                                </div>
+                                <!-- Bibliography Section -->
+                                <div class="mt-auto">
+                                    <div class="h-2 w-1/3 bg-gray-500 rounded mb-2"></div>
+                                    <div class="h-1 w-full bg-gray-300 rounded mb-1"></div>
+                                    <div class="h-1 w-3/4 bg-gray-300 rounded"></div>
+                                </div>
+                                <!-- Grade Stamp -->
+                                <div class="absolute top-4 right-4 w-12 h-12 border-2 border-red-500 rounded-full flex items-center justify-center transform rotate-12 opacity-80">
+                                    <span class="text-red-500 font-bold font-serif text-xl">10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="order-2 text-left">
+                        <div class="inline-block p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-6">
+                            <i data-lucide="book-open" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Investigación Académica</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            Ayuda profesional para tus tareas escolares. Redacción clara, investigación profunda y formato impecable.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Formato APA:</strong> Citas y referencias bibliográficas correctamente estructuradas.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Estructura Completa:</strong> Incluimos portada, índice, introducción, desarrollo y conclusión.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="text-violet-500 mt-1 w-5 h-5"></i>
+                                <span class="text-gray-400 text-sm"><strong>Cero Plagio:</strong> Redacción original sintetizando la información de fuentes confiables.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 6: MÚSICA (CARRUSEL INFERIOR HORIZONTAL) -->
+                <div class="relative group">
+                    <!-- Contenedor Superior (Texto + Reproductor) -->
+                    <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+                        <!-- Texto -->
+                        <div class="text-left">
+                            <div class="inline-block p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6">
+                                <i data-lucide="music" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Tu Música, Sin Límites</h3>
+                            <p class="text-gray-300 leading-relaxed mb-6">
+                                Recuperamos la calidad que las plataformas de streaming comprimen. Entregamos archivos <strong>FLAC y MP3 (320kbps)</strong> perfectamente etiquetados, con su portada original incrustada.
+                                <br><br>
+                                Olvídate de la publicidad y la dependencia de internet. Construye tu biblioteca personal para siempre.
+                            </p>
+                            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm text-gray-400">
+                                <i data-lucide="headphones" class="w-4 h-4"></i>
+                                <span>Calidad de Estudio Garantizada</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual: Reproductor -->
+                        <div class="flex justify-center">
+                            <div class="relative w-72 bg-neutral-900 rounded-3xl border border-neutral-700 shadow-2xl p-6 transform group-hover:scale-105 transition-transform duration-700 z-10">
+                                <!-- Cover Art -->
+                                <div class="w-full aspect-square bg-gradient-to-tr from-cyan-900 to-blue-900 rounded-2xl mb-6 shadow-lg relative overflow-hidden flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                                    <i data-lucide="music" class="w-16 h-16 text-white/50"></i>
+                                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-yellow-400 border border-yellow-400/30">
+                                        HI-RES LOSSLESS
+                                    </div>
+                                </div>
+                                <div class="mb-6">
+                                    <h4 class="text-white font-bold text-lg leading-tight mb-1">Midnight City</h4>
+                                    <p class="text-gray-400 text-sm">M83 • Hurry Up, We're Dreaming</p>
+                                </div>
+                                <div class="w-full h-1 bg-gray-700 rounded-full mb-2 relative">
+                                    <div class="absolute left-0 top-0 h-full w-2/3 bg-cyan-500 rounded-full"></div>
+                                    <div class="absolute left-2/3 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+                                </div>
+                                <div class="flex justify-between text-[10px] text-gray-500 mb-6">
+                                    <span>2:45</span>
+                                    <span>4:03</span>
+                                </div>
+                                <div class="flex justify-between items-center text-white">
+                                    <i data-lucide="shuffle" class="w-4 h-4 text-gray-500"></i>
+                                    <i data-lucide="skip-back" class="w-6 h-6 hover:text-cyan-400 cursor-pointer"></i>
+                                    <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30 hover:scale-110 transition-transform cursor-pointer">
+                                        <i data-lucide="play" class="w-5 h-5 fill-white"></i>
+                                    </div>
+                                    <i data-lucide="skip-forward" class="w-6 h-6 hover:text-cyan-400 cursor-pointer"></i>
+                                    <i data-lucide="repeat" class="w-4 h-4 text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual: Carrusel Inferior -->
+                    <div class="w-full h-32 overflow-hidden fade-mask-h relative mt-8">
+                        <div class="vinyl-track-h flex gap-6 absolute top-0 left-0 h-full items-center">
+                            <!-- Bloque 1 -->
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-cyan-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-purple-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-pink-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-yellow-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-green-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-red-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-blue-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-orange-500"></div></div></div>
+                            <!-- Bloque 2 (Duplicado) -->
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-cyan-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-purple-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-pink-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-yellow-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-green-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-red-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-blue-500"></div></div></div>
+                            <div class="vinyl-record"><div class="vinyl-disc"><div class="vinyl-label bg-orange-500"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1259,14 +1515,6 @@
                 alert('Correo copiado al portapapeles');
             });
         }
-        
-        function copyingCorreo() {
-             const correo = document.getElementById('paypal-email').innerText;
-             navigator.clipboard.writeText(correo).then(() => {
-                 alert('Correo copiado al portapapeles');
-             });
-         }
-
 
         // --- Lógica Scroll para Barra Flotante ---
         let lastScrollTop = 0;
@@ -1275,17 +1523,20 @@
         window.addEventListener("scroll", function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
+            // Si estamos muy arriba (inicio), mostrar siempre
             if (scrollTop < 100) {
                 floatingContact.classList.remove('translate-y-[200%]');
                 return;
             }
 
             if (scrollTop > lastScrollTop) {
+                // Scroll hacia abajo -> Ocultar
                 floatingContact.classList.add('translate-y-[200%]');
             } else {
+                // Scroll hacia arriba -> Mostrar
                 floatingContact.classList.remove('translate-y-[200%]');
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Para Mobile
         }, false);
 
         // --- Lógica para el Modal de Demo (ACTUALIZADA CON MENÚ) ---
