@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda Ana & Carlos | Moderno</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #0f172a; color: #e2e8f0; overflow-x: hidden; position: relative; }
+        .background-orb { position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4; animation: float 20s infinite ease-in-out; }
+        .orb-1 { width: 300px; height: 300px; background: #c026d3; top: -50px; left: -50px; }
+        .orb-2 { width: 250px; height: 250px; background: #4f46e5; bottom: -50px; right: -50px; animation-delay: -5s; }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -30px); } }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); }
+        .script-font { font-family: 'Pinyon Script', cursive; }
+        .envelope-container { height: 120px; overflow: hidden; position: relative; margin-bottom: 20px; }
+        .envelope { position: absolute; font-size: 24px; color: #e879f9; top: -30px; animation: rain 3s linear infinite; opacity: 0; }
+        @keyframes rain { 0% { top: -30px; opacity: 0; transform: rotate(0deg); } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 120px; opacity: 0; transform: rotate(20deg); } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen items-center justify-center p-4">
+    <div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>
+    <button onclick="toggleAudio()" class="fixed bottom-6 right-6 w-12 h-12 glass-card rounded-full flex items-center justify-center z-50 text-fuchsia-400 hover:bg-white/10 transition-all border-fuchsia-500/30 animate-bounce">
+        <i id="music-icon" class="fa-solid fa-music"></i>
+    </button>
+    <audio id="bg-music" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    <main class="w-full max-w-md space-y-8 my-8 relative z-10">
+        <div class="text-center space-y-2 fade-in">
+            <p class="text-xs uppercase tracking-[0.4em] text-cyan-400">Nuestra Boda</p>
+            <h1 class="text-6xl script-font text-white drop-shadow-[0_0_15px_rgba(232,121,249,0.5)]">Ana & Carlos</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-fuchsia-500 to-cyan-500 mx-auto rounded-full mt-4"></div>
+            <p class="text-gray-300 italic mt-4 font-light">"El amor es la única tecnología que reinicia el alma"</p>
+        </div>
+        <div class="glass-card rounded-3xl p-8 text-center relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div class="grid grid-cols-3 items-center border-b border-white/10 pb-6 mb-6">
+                <div><span class="block text-4xl font-bold text-white">24</span><span class="text-[10px] uppercase text-gray-400 tracking-widest">Octubre</span></div>
+                <div class="flex justify-center"><div class="w-12 h-12 rounded-full border border-fuchsia-500/50 flex items-center justify-center"><i class="fa-solid fa-heart text-xl text-fuchsia-400 animate-pulse"></i></div></div>
+                <div><span class="block text-4xl font-bold text-white">5:00</span><span class="text-[10px] uppercase text-gray-400 tracking-widest">PM</span></div>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-1">Hacienda Santa Lucia</h2>
+            <p class="text-sm text-gray-400 mb-8">Carretera Federal #123, Tlaxcala.</p>
+            <div class="space-y-4">
+                <a href="#" class="flex items-center justify-center w-full py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all group"><i class="fa-solid fa-map-location-dot mr-3 text-cyan-400 group-hover:scale-110 transition-transform"></i>Ver Ubicación GPS</a>
+                <a href="#" class="flex items-center justify-center w-full py-3.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-bold shadow-lg shadow-fuchsia-500/30 transition-all"><i class="fa-brands fa-whatsapp mr-3 text-lg"></i>Confirmar Asistencia</a>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center">
+            <div class="envelope-container">
+                <i class="fa-regular fa-envelope envelope" style="left: 20%; animation-delay: 0s;"></i>
+                <i class="fa-solid fa-gift envelope" style="left: 50%; animation-delay: 1s; font-size: 20px; color: #22d3ee;"></i>
+                <i class="fa-regular fa-envelope envelope" style="left: 80%; animation-delay: 2s;"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Lluvia de Sobres</h3>
+            <p class="text-xs text-gray-400 leading-relaxed px-4">Tu presencia es nuestro mayor regalo. Si deseas tener un detalle adicional, contaremos con un buzón para sobres el día del evento.</p>
+        </div>
+        <div class="flex justify-center gap-4 text-center">
+            <div class="glass-card p-3 rounded-lg w-20"><span class="block text-2xl font-bold text-cyan-400">10</span><span class="text-[9px] uppercase text-gray-500">Días</span></div>
+            <div class="glass-card p-3 rounded-lg w-20"><span class="block text-2xl font-bold text-fuchsia-400">05</span><span class="text-[9px] uppercase text-gray-500">Hrs</span></div>
+            <div class="glass-card p-3 rounded-lg w-20"><span class="block text-2xl font-bold text-white">30</span><span class="text-[9px] uppercase text-gray-500">Min</span></div>
+        </div>
+        <footer class="text-center pt-8 pb-4"><p class="text-[10px] text-gray-600 uppercase tracking-widest">Invitación creada por <span class="text-cyan-600 font-bold">BitStudio</span></p></footer>
+    </main>
+    <script>
+        const audio = document.getElementById('bg-music'); let isPlaying = false;
+        function toggleAudio() { if (isPlaying) { audio.pause(); document.getElementById('music-icon').classList.replace('fa-volume-high', 'fa-music'); } else { audio.play().catch(e => alert("Toca la pantalla primero para activar el audio")); document.getElementById('music-icon').classList.replace('fa-music', 'fa-volume-high'); } isPlaying = !isPlaying; }
+    </script>
+</body>
+</html>
