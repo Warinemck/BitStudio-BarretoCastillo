@@ -117,6 +117,11 @@
             overflow: hidden;
         }
 
+        /* Transición suave para las partes del SVG */
+        .vol-part {
+            transition: opacity 0.3s ease;
+        }
+
         .glass-card:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.06);
@@ -281,8 +286,27 @@
                 <i class="fa-solid fa-play text-lg"></i>
             </button>
             <div class="w-px h-4 bg-white/20 shrink-0"></div>
-            <button id="mute-toggle" class="text-gray-400 hover:text-white transition-transform hover:scale-110 w-6 flex justify-center shrink-0">
-                <i class="fa-solid fa-volume-high text-lg"></i>
+            <!-- BOTÓN MUTE REEMPLAZADO POR SVG PERSONALIZADO (FIX CLIP) -->
+            <button id="mute-toggle" class="text-gray-400 hover:text-white transition-transform hover:scale-110 w-8 h-8 flex justify-center items-center shrink-0">
+                <!-- SVG ajustado con overflow-visible y escala interna para evitar recortes -->
+                <svg class="w-6 h-6 overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Grupo escalado para margen de seguridad -->
+                    <g transform="translate(1.2, 1.2) scale(0.9)">
+                        <!-- Bocina -->
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <!-- X de Mute (ID: vol-mute-x) -->
+                        <g id="vol-mute-x" class="vol-part opacity-0">
+                            <line x1="23" y1="9" x2="17" y2="15"></line>
+                            <line x1="17" y1="9" x2="23" y2="15"></line>
+                        </g>
+                        <!-- Rayita 1 (ID: vol-wave-1) -->
+                        <path id="vol-wave-1" class="vol-part opacity-0" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <!-- Rayita 2 (ID: vol-wave-2) -->
+                        <path id="vol-wave-2" class="vol-part opacity-0" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        <!-- Rayita 3 (ID: vol-wave-3) -->
+                        <path id="vol-wave-3" class="vol-part opacity-0" d="M22 2a15 15 0 0 1 0 20"></path>
+                    </g>
+                </svg>
             </button>
             
             <!-- Separador y Botón Expansor -->
@@ -1714,6 +1738,7 @@
 
             const musicToggleBtn = document.getElementById('music-toggle');
             const muteToggleBtn = document.getElementById('mute-toggle');
+            const muteBtnContainer = document.getElementById('mute-toggle');
             
             const volumeExpandBtn = document.getElementById('volume-expand');
             const volumeWrapper = document.getElementById('volume-wrapper');
@@ -1742,16 +1767,48 @@
                     }
                 }
 
-                // Función para actualizar icono de Mute
+                // Función para actualizar icono de Mute y Volumen Dinámicamente (CORREGIDA CON SVG)
                 function updateMuteIcon() {
-                    if (audio.muted || audio.volume === 0) {
-                        muteIcon.classList.remove('fa-volume-high');
-                        muteIcon.classList.add('fa-volume-xmark');
-                        muteIcon.parentElement.classList.add('text-red-400');
+                    const vol = audio.volume;
+                    
+                    // Referencias a partes del SVG
+                    const volX = document.getElementById('vol-mute-x');
+                    const wave1 = document.getElementById('vol-wave-1');
+                    const wave2 = document.getElementById('vol-wave-2');
+                    const wave3 = document.getElementById('vol-wave-3');
+
+                    // Añadir animación pop al botón contenedor
+                    muteBtnContainer.classList.remove('icon-pop');
+                    void muteBtnContainer.offsetWidth; // Trigger reflow
+                    muteBtnContainer.classList.add('icon-pop');
+
+                    const isMuted = audio.muted || vol === 0;
+
+                    if (isMuted) {
+                        // Estado Mute: Mostrar X, ocultar ondas
+                        volX.classList.remove('opacity-0');
+                        wave1.classList.add('opacity-0');
+                        wave2.classList.add('opacity-0');
+                        wave3.classList.add('opacity-0');
+                        muteBtnContainer.classList.add('text-red-400');
+                        muteBtnContainer.classList.remove('text-gray-400', 'hover:text-white');
                     } else {
-                        muteIcon.classList.remove('fa-volume-xmark');
-                        muteIcon.classList.add('fa-volume-high');
-                        muteIcon.parentElement.classList.remove('text-red-400');
+                        // Estado con sonido
+                        volX.classList.add('opacity-0');
+                        muteBtnContainer.classList.remove('text-red-400');
+                        muteBtnContainer.classList.add('text-gray-400', 'hover:text-white');
+
+                        // Onda 1 (> 0%)
+                        if (vol > 0) wave1.classList.remove('opacity-0');
+                        else wave1.classList.add('opacity-0');
+
+                        // Onda 2 (> 25%)
+                        if (vol > 0.25) wave2.classList.remove('opacity-0');
+                        else wave2.classList.add('opacity-0');
+
+                        // Onda 3 (> 75%)
+                        if (vol > 0.75) wave3.classList.remove('opacity-0');
+                        else wave3.classList.add('opacity-0');
                     }
                 }
 
